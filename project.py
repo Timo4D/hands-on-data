@@ -7,12 +7,18 @@ app = marimo.App(width="medium", auto_download=["ipynb"])
 @app.cell
 def _():
     import marimo as mo
+    import itertools
     import pandas as pd
-    import matplotlib.pyplot as plt
+    import numpy as np
     import seaborn as sns
+    import matplotlib.pyplot as plt
     from sklearn.datasets import load_diabetes
 
-    return load_diabetes, mo, pd, plt, sns
+    from statsmodels.stats.multitest import multipletests
+
+    from scipy import stats
+
+    return load_diabetes, mo, multipletests, pd, plt, sns, stats
 
 
 @app.cell(hide_code=True)
@@ -143,6 +149,65 @@ def _(mo):
     - Plot 3
         - LDL and TC have a strong positive correlation
         - HDL and TCH have a strong negative correlation
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    # Project task 3: Testing for pair-wise associations between features
+    ### Are there features (including Age) in the dataset which differ significantly between women and men?
+    """)
+    return
+
+
+@app.cell
+def _(df_diabetes_features, df_diabetes_metadata, multipletests, pd, stats):
+    df_all = pd.concat([df_diabetes_metadata, df_diabetes_features], axis=1)
+    features = ["Age", "BMI", "BP", "TC", "LDL", "HDL", "TCH", "LTG", "Glu", "Progression"]
+
+    female = df_all[df_all["Gender"] == "Female"]
+    male = df_all[df_all["Gender"] == "Male"]
+
+    rows = []
+    for feat in features:
+        f_vals = female[feat].dropna()
+        m_vals = male[feat].dropna()
+
+        # Normality check (Shapiro-Wilk) for each group
+        _, p_norm_f = stats.shapiro(f_vals)
+        _, p_norm_m = stats.shapiro(m_vals)
+        both_normal = p_norm_f > 0.05 and p_norm_m > 0.05
+
+        # Choose parametric (t-test) or non-parametric (Mann-Whitney U)
+        if both_normal:
+            _, p_raw = stats.ttest_ind(f_vals, m_vals)
+            test = "t-test"
+        else:
+            _, p_raw = stats.mannwhitneyu(f_vals, m_vals)
+            test = "Mann-Whitney U"
+
+        rows.append({"Feature": feat, "Test": test, "p (raw)": round(p_raw, 4)})
+
+    df_gender_tests = pd.DataFrame(rows)
+
+    # FDR correction (Benjamini-Hochberg) for multiple comparisons
+    _, p_fdr, _, _ = multipletests(df_gender_tests["p (raw)"], method="fdr_bh")
+    df_gender_tests["p (FDR)"] = p_fdr.round(4)
+    df_gender_tests["Significant"] = df_gender_tests["p (FDR)"] < 0.05
+
+    df_gender_tests
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    There are 8 features with significant differences: Age, BMI, BP, LDL, HDL, TCH, LTG, Glu
+    and 2 features without significant differences: TC, Progression
+
+    ### Are there features in the dataset which have significant correlation between them?
     """)
     return
 
