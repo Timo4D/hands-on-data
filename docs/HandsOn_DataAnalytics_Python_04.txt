@@ -1,0 +1,440 @@
+Course: Hands-On Data Analytics with Python
+Eli Zamir
+Session 4: Handling and processing data using the Pandas library
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+1
+
+Tabular data – a universal data structure
+Raw data: The data in the form in which it got originally acquired 
+Such data has the form of a table (hence „tabular data“): 
+Data points (=“object”) X Features
+•
+Data point: an individual observed example (“object”) within the dataset. (e.g., a given house)
+•
+Feature: an individual property that describes each data point (e.g., price)
+Most commonly, the data contains values for the features of objects
+For example:
+•
+Objects:    Houses
+•
+Features:  area, location, price,… of each house
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+2
+
+Tabular data – an example
+Data points: street blocks
+Data points
+• MedInc: Median income
+• HouseAge: Median age of houses
+• AveRooms: Average number of rooms per house
+• AveBedrms: Average number of bedrooms per house
+• Population: Total population in the block group
+• AveOccup: Average number of occupants
+• Latitude: Geographic latitude
+• Longitude: Geographic longitude
+• MedHouseVal: Median house price
+Features
+Features:
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+3
+
+pandas: Python library for handling and processing data
+https://pandas.pydata.org/docs/
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+4
+
+Importing pandas
+“pd” is just a convenstion (i.e. the typical alias to use for the impotred Pandas library) 
+…
+After the import of pandas, its functions and classes can be called usingthe “pd.” prefix  
+The command to import pandas:
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+5
+
+The DateFrame class
+pandas provides two types of classes:
+•
+Series : a one-dimensional labeled array
+•
+DataFrame : a two-dimensional array with labeled columns and indexed rows
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+6
+We will focus on DataFrame, as it is designed for handling and processing tabular data
+
+The DateFrame class
+The standard usage convention:
+•
+Rows correspond to the data points 
+•
+Columns correspond to features
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+7
+Features
+Index
+Records
+DataFrame contains a two-dimensional array with labeled columns and indexed rows
+
+Creating a Dataframe object: example, from a Dictionary
+Features
+Index
+Records
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+8
+To genrate or define a DataFrame object:   pd.DataFrame()
+
+Reassigning the index to one of the columns 
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+9
+.set_index()
+
+Exporting a DataFrame to a file 
+Saving a DataFrame as a csv file:
+DataFrameName.to_csv()
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+10
+Saving a DataFrame as an Excel file:
+DataFrameName.to_excel()
+
+Writing and reading Excel files: solving  ModuleNotFoundError: No module named 'openpyxl'
+Step 1: Open Terminal (macOS) or Command Prompt / PowerShell (Windows)
+Step 2: Type and execute the command:
+python3 -m pip install openpyxl
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+11
+In case the following error occurs when trying to write / read excel files: 
+ModuleNotFoundError: No module named 'openpyxl'
+Then the openpyxl package should be installed, as follows: 
+
+Reading a csv file into DataFrame
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+12
+Read a csv file into DataFrame:  pd.read_csv()
+Indicating which column 
+should be used as the index
+
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+13
+Reading an Excel file into DataFrame
+Read an Excel file into DataFrame:  DataFrameName.read_excel()
+Indicating which column 
+should be used as the index
+
+Checking the dimension of a DataFrame and viewing first/end n rows 
+Checking the dimensionality of the DataFrame:  DataFrameName.shape
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+14
+Seeing the first n rows: 
+DataFrameName.head(n)
+Seeing the last n rows:
+DataFrameName.tail(n)
+(rows, columns)
+
+Getting a general overview about the data in a DataFrame
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+15
+DataFrameName.info()
+DataFrameName.describe()
+
+Counting values occurrence for a feature
+Counting values for a given feature
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+16
+DataFrameName.ColumnName.value_counts()
+
+Renaming DataFrame columns
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+17
+DataFrameName.rename()
+
+Sorting a DataFrame
+Getting the rows with n highest value for a given feature:
+DataFrameName.nlargest(n, ColumnName)
+Sorting by the values of a given column:  DataFrameName.rename()
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+18
+
+Subsetting a column from a DataFrame
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+19
+The full DataFrame
+subsetting to 
+Series
+subsetting to 
+DataFrame
+
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+20
+Subsetting multiples columns from a DataFrame
+Subsetting
+The derived DaraFrame will contain the columns which are  stated 
+inside the [[ ]], in the same order as they stated
+The full DataFrame
+
+Subsetting rows by their index position with .iloc
+.iloc subsets rows based on their index positions, starting from 0
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+21
+0
+1
+2
+3
+4
+5
+The full DataFrame
+subsetting to 
+Series
+subsetting to 
+DataFrame
+
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+22
+Subsetting rows bases on values with .loc
+The full DataFrame
+Subsetting
+
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+23
+Subsetting rows bases on values with .loc using combined conditions
+The full DataFrame
+
+Changing individual values in DataFrame
+changing using .loc 
+(label-based)
+changing using .iloc 
+(position-based)
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+24
+The original DataFrame
+
+Creating  a new column based on another column
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+25
+The original DataFrame
+New column
+
+Creating  a new column based on other columns (string example I)
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+26
+The original DataFrame
+
+Creating  a new column based on other columns (string example II)
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+27
+The original DataFrame
+.str.cat()
+
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+28
+The original DataFrame
+.str.split().str.get()
+Creating  a new column based on other columns (string example III)
+
+Creating  a new column based on other columns
+https://pandas.pydata.org/docs/getting_started/intro_tutorials/05_add_columns.html#
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+29
+
+.str.lower()
+.str.split("")
+.str.split("").str.get(i)
+.str.contains("")
+.str.len()
+.str.replace("", "")
+https://pandas.pydata.org/docs/getting_started/intro_tutorials/10_text_data.html#min-tut-10-text
+. . .
+Manipulating text along DataFrame columns
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+30
+
+Deleting a column in a DataFrame
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+31
+The original DataFrame
+.drop(columns =   )
+
+Deleting a row in a DataFrame
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+32
+The original DataFrame
+.drop(index =   )
+
+Adding a new row to a DataFrame with pd.concat([ ]) 
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+33
+The original DataFrame:
+pd.concat([ ])
+The new raw:
+The new DataFrame:
+
+Concatenating multiple DataFrames with pd.concat([ ])
+Possible additions:
+•
+Verifying integrity
+•
+Keeping only common columns 
+•
+Ignoring index
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+34
+The two DataFrames
+pd.concat([ ])
+
+Checking for duplicates in a DataFrame and removing them
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+35
+.duplicated()
+.drop_duplicates()
+
+Identifying in a DataFrame missing values
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+36
+.isnull()
+.isnull().sum(axis = )
+
+Removing from a DataFrame records that have missing values
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+37
+.dropna(axis = 0)
+
+Removing from a DataFrame features that have missing values
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+38
+.dropna(axis = 1)
+
+Aggregating records in a DataFrame for analysis
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+39
+.groupby()
+.groupby().agg()
+
+Introduction to the course final project
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+40
+•
+Work on the project should be done independently by each participant (outside of class hours)
+•
+Core project tasks will be assigned gradually along the course, aligned with the topics learned
+•
+The final work should be submitted as a single Jupyter Notebook file
+•
+The project should include:
+•
+Starting with a given input data (as will be provided in this session)
+•
+Applying analysis modules that were learned
+•
+Implementing also at least one analysis method (Python-based) which was not learned in the 
+course
+•
+Addressing given questions regarding the data
+•
+Coming up with new questions and observations regarding the data, and assessing them as 
+possible
+•
+Submitting a final report in a form of a structured Jupyter-Notebook notebook, which 
+should include:  Explanatory texts, code, figures and interpretation of the results
+•
+Concrete guidelines will be communicated along the course
+
+Introduction to the course final project: The data 
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+41
+https://scikit-learn.org/stable/datasets/toy_dataset.html#diabetes-dataset
+For the sake of the project,
+data should be loaded unscaled
+
+Introduction to the course final project: The data 
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+42
+442 diabetes patients (anonymized !)
+For each patient, 11 parameters are provided:
+1) “age” 
+(in years)
+2) “sex”
+1 (Female), 2 (Male)
+3) “bmi” 
+body mass index
+4) “bp” 
+average blood pressure
+5) “s1” 
+tc, total serum cholesterol
+6) “s2” 
+ldl, low-density lipoproteins
+7) “s3”  
+hdl, high-density lipoproteins
+8) “s4” 
+tch, total cholesterol / HDL
+9) “s5” 
+ltg, possibly log of serum triglycerides level
+10)“s6” 
+glu, blood sugar level
+11)“target” diabetes disease progression one year after baseline*
+The Diabetes dataset as provided by scikit-learn 
+*Baseline time point: the time point at which parameters 1-10 were acquired  
+
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+43
+Introduction to the course final project: The data 
+
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+44
+For the sake of the project,
+data should be loaded unscaled
+Introduction to the course final project: The data 
+
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+45
+Introduction to the course final project: The data 
+
+Course: Hands-On Data Analytics with Python
+Eli Zamir
+Session 4: Handling and processing data using the Pandas library
+April 16, 2026
+Hands-on data analytics with Python; Session 4; Dr. Eli Zamir
+46
+Hands-on session (handout provided separately)

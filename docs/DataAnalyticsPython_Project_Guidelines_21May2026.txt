@@ -1,0 +1,178 @@
+Hands-on data analytics with Python; Dr. Eli Zamir                                                               Guidelines for the final project 
+ 
+1
+Updated: May 21, 2026 
+ 
+Guidelines for the final project 
+ 
+The final project report should be submitted as a single Jupyter Notebook file, and run so that it 
+contains also all the output (figures / output text). 
+ 
+The deadline for submission will be communicated. 
+ 
+Evaluation criteria: 
+ 
+(1) Implementation of the relevant learned analysis modules for addressing the project’s 
+questions.  
+ 
+For each individual implemented analysis module, the following aspects will be assessed: 
+ 
+• Clarity of stating (or short describing) the driving motivation / question for the analysis 
+(should be done in a Markdown cell before the cell of the analysis code) 
+ 
+• Correctness of the implementation, clarity of the code, and code comments when 
+needed. (the analysis code cell) 
+ 
+• Clarity and completeness of the generated figures (which should appear below the 
+analysis code cell): Axis titles, legends, etc. 
+ 
+• Clarity and depth of the interpretation of the obtained results (should be done in a 
+markdown cell after the cell with the analysis code and the generated figure). 
+ 
+(2) Clear structuring and logical organization of the whole Jupyter Notebook:  
+The whole Notebook, once run as a whole from the beginning until the end, should generate 
+the correct results and be organized with sections and subsections (when applicable), 
+including the corresponding titles in a logical manner.  
+ 
+Analysis guidelines for the project: 
+ 
+Specific project-related tasks and general guidelines will be provided by me gradually, in parallel 
+with the learning of the corresponding topics in the sessions. This information will be gradually 
+appended to this document below (which should therefore be referred to as a dynamic 
+document). 
+ 
+Submission deadline: 15.06.2026 
+  
+ 
+ 
+
+Hands-on data analytics with Python; Dr. Eli Zamir                                                               Guidelines for the final project 
+ 
+2
+ 
+Project task 1: Data import and organization 
+ 
+Import the data of the project and process it as described in 
+“DataAnalyticsPython_Exercises_04.pdf”.  
+ 
+Thus, you should at the end derive the Save df_diabetes_metadata and  
+df_diabetes_features  as Excel files named Table_diabetes_metadata.xlsx 
+and df_diabetes_features.xlsx , respectively. 
+ 
+Organize this part in a clean manner, at the beginning of your Jupyter Notebook report file.  
+ 
+Project task 2: Visualizing of the data 
+ 
+(1) Make box-plots to visualize and compare the distribution of the raw (!) values of all the 
+features in df_diabetes_features.  
+ 
+• Use the exercises that were done in DataAnalytics “Python_Exercises_05.pdf” as a reference. 
+• What is the motivation to do these plots?  does it make sense to this visualization also on 
+the data after standardization? 
+ 
+(2) Make box-plot comparing the Age of the women and men participants in the dataset. 
+ 
+(3) Make a scatter plot for each possible 2-feature pair (including all the numeric features: so 
+including all the features in df_diabetes_features as well as Age. 
+ 
+(4) What can you conclude at this stage from visual inspection of the plots? 
+ 
+Project task 3: Testing for pair-wise associations between features 
+ 
+Apply the proper statistical tests to check for pair-wise association between features: 
+ 
+(1) Are there features (including Age) in the dataset which differ significantly between women 
+and men? 
+ 
+(2) Are there features (including Age) in the dataset which have significant correlation between 
+them? Consider which correlation test is proper to use here 
+  
+Project task 4: Evaluating of there are clusters in the data using hierarchical clustering 
+ 
+(1) Generate a copy of df_diabetes_features , name it 
+df_diabetes_basal_features and omit from df_diabetes_basal_features 
+the “Progression” feature.   
+So, df_diabetes_basal_features should contain the following 8 features: 'BMI', 
+'BP', 'TC', 'LDL', 'HDL', 'TCH', 'LTG', 'Glu' 
+
+Hands-on data analytics with Python; Dr. Eli Zamir                                                               Guidelines for the final project 
+ 
+3
+(2) Using hierarchical cluster analysis, assess if there are clear clusters in the data 
+(df_diabetes_basal_features). 
+Important: How do you need to further process df_diabetes_basal_features, so 
+that applying cluster analysis on it will be meaningful? 
+ 
+Generate dendrograms to visualize the clustering results. Try different linkage methods 
+(“average”, “ward” and possibly others). Interpret the results. 
+ 
+(3) The fcluster function (import with: “from scipy.cluster.hierarchy import 
+fcluster” ) enables to derive from a given linkage matrix and threshold an assignment of 
+each of the data point to a given cluster.  
+Use this, in order to assess if the clusters that are obtained (choose one of what you have 
+tried in (2)) are associated with the following features: 
+• Gender 
+• Progression (categorized to two: (i) above the median progression and (ii) below or equal 
+the median progression) 
+• Age (categorized to two: (i) above the median age and (ii) below or equal the median age) 
+ 
+Project task 5: Exploring multidimensional patterns with PCA  
+ 
+(1) Process df_diabetes_basal_features for PCA analysis. First check if it is possible to 
+apply log-transformation, and if yes then apply it. Next apply data standardization. 
+ 
+(2) Apply the PCA on the data you obtained in (1). Generate then a plot of PC1 vs PC2, indicating 
+on the axes the percentages of explained variance.  Generate an additional similar plot PC3 vs 
+PC4. Interpret the results. 
+ 
+(3) Evaluate and visualize the loading of the original features on PC1 and PC2. What can you learn 
+from the results? 
+ 
+(4) Generate the following additional plots: 
+a. As in (2), but color-code the points according to Gender 
+b. As in (2), but color-code the points according to Progression (categorized to two: (i) 
+above the median progression and (ii) below or equal the median progression) 
+c. As in (2), but color-code the points according to Age (categorized to two: (i) above the 
+median age and (ii) below or equal the median age) 
+Interpret the results. 
+ 
+Project task 6: Applying multiple linear regression 
+ 
+Apply multiple linear regression for predicting the “Progression” feature based on the 8 
+features of the df_diabetes_basal_features ('BMI', 'BP', 'TC', 'LDL', 'HDL', 'TCH', 'LTG', 
+'Glu'). General guidelines: 
+ 
+• Partition the data to train set and test set 
+• Perform data standardization of the two sets (make sure to do that in a manner which is right 
+for each of the two sets) 
+• Perform the linear regression analysis, and evaluate the fit 
+
+Hands-on data analytics with Python; Dr. Eli Zamir                                                               Guidelines for the final project 
+ 
+4
+•  Assess the importance of the features for the prediction of the “Progression” feature 
+• Interpret the results 
+ 
+Project task 7: Applying logistic regression  
+ 
+Apply logistic regression for predicting “High progression” versus “Low progression” based on the 
+8 features of the df_diabetes_basal_features ('BMI', 'BP', 'TC', 'LDL', 'HDL', 'TCH', 
+'LTG', 'Glu'). 
+“High progression”: the “Progression” feature value is >  “Progression” feature median 
+“Low progression”: the “Progression” feature value is ≤  “Progression” feature median 
+ 
+General guidelines: 
+• 
+Create a feature “Progression_class”, corresponding to the “Progression” feature, but with 
+the value 0 for Progression values which are ≤ Progression feature median, and value 1 for 
+Progression values which are >  Progression  feature median 
+• Partition the data to train set and test set 
+• Perform data standardization to the two sets (make sure to do that in a manner which is right 
+for each of the two sets) 
+• Perform the logistic regression analysis with Elastic net regularization 
+• Generate the ROC curve and derive also the area under the ROC curve (ROC AUC) 
+• Assess the important of the features for the prediction of the “Progression_class” feature 
+• Interpret the results 
+ 
+ 
+ 

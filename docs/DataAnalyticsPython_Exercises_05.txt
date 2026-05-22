@@ -1,0 +1,120 @@
+Hands-on data analytics with Python; Dr. Eli Zamir                                                        Session 5 Exercises; April 23, 2026 
+ 
+1
+All the exercises should be performed in Jupyter Notebook. 
+ 
+ 
+Exercise 1: Line plot and scatter plot with Matplotlib  
+ 
+ 
+Starting with the following code: 
+ 
+ 
+(1a) Generate the following plot (including layout), using plt.plot(): 
+ 
+ 
+Hint, an example from today’s lecture: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Hands-on data analytics with Python; Dr. Eli Zamir                                                        Session 5 Exercises; April 23, 2026 
+ 
+2
+(1b) Generate the following plot (including layout), using plt.scatter(): 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Hint, an example from today’s lecture: 
+ 
+ 
+ 
+Exercise 2: Bar plot with Matplotlib  
+ 
+Starting with the following code: 
+ 
+ 
+Generate the following bar plots: 
+ 
+ 
+
+Hands-on data analytics with Python; Dr. Eli Zamir                                                        Session 5 Exercises; April 23, 2026 
+ 
+3
+(2a) Using plt.bar(): 
+ 
+ 
+(2b) Using plt.barh(): 
+ 
+ 
+Exercise 3: Box plots with seaborn 
+ 
+Start with the following code to load a subset of the scikit-learn housing dataset (uploaded as a 
+csv file “Data_sklearn_housing_subset.csv” on the Canvas board of the course) to a DataFrame: 
+ 
+ 
+ 
+ 
+
+Hands-on data analytics with Python; Dr. Eli Zamir                                                        Session 5 Exercises; April 23, 2026 
+ 
+4
+(3a) Using sns.boxplot() and sns.stripplot() generate the following plot: 
+ 
+ 
+ 
+ 
+Hint, an example from today’s lecture: 
+ 
+ 
+ 
+(3b) Check if all values in the DataFrame are > 0 using: 
+ 
+print((DataFrameName > 0).all().all()) 
+ 
+You should get “True”, meaning that one can apply directly a log scale for visualization. 
+ 
+So, generate the same plot as in 3a, but with a log scale for the y-axis, by adding the statement 
+plt.yscale(‘log’) : 
+ 
+ 
+
+Hands-on data analytics with Python; Dr. Eli Zamir                                                        Session 5 Exercises; April 23, 2026 
+ 
+5
+ 
+ 
+(3c) Standardize the df_housing DataFrame, as was shown in today’s lecture (for the wine 
+dataset): 
+ 
+ 
+ 
+And generate the same plot as in 3a, but with the standardized data: 
+ 
+ 

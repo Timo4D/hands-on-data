@@ -1,0 +1,729 @@
+Course: Hands-On Data Analytics with Python
+Eli Zamir
+Session 3: Core Python programming (part 2)
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+1
+
+2
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+•
+Sequential control flow:  Instructions are excuted in the order that they are written (the default flow)
+•
+Decision control flow:      The program chooses different paths based on conditions
+statement to do
+statement to do
+statement to do
+if (condition):
+ 
+statement to do
+ 
+statement to do
+ 
+statement to do
+else:
+ 
+statement to do
+ 
+statement to do
+ 
+statement to do
+statement to do
+statement to do
+statement to do
+Sequential control flow
+Decision control flow
+Control flows
+Control flows determine the order of instructions execution, and which instructions are executed, in a program.
+For example:
+
+3
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+•
+Sequential control flow: 
+ 
+Instructions are executed in the order in which they are written
+•
+This is the default flow
+•
+Decision control flow: 
+ 
+The program chooses different paths based on conditions
+•
+if, elif, else
+•
+match, case
+•
+Iteration (loop) control flow: 
+Repeatedly executes a block of code according to a given scheme or rule
+•
+for...in...
+•
+while 
+•
+Jump control flow: 
+ 
+ 
+Change the normal flow inside a loop
+•
+break
+•
+continue
+•
+Function calls control flow : 
+Control jumps to a function, runs its body, then returns to the caller
+•
+return
+•
+(yield)
+•
+Error control flow: 
+ 
+ 
+Changes execution path when an error or exceptional condition occurs
+•
+try, except, else, finally, 
+•
+raise, assert 
+Control flows in Python
+
+4
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+•
+Sequential control flow: 
+ 
+Instructions are executed in the order in which they are written
+•
+This is the default flow
+•
+Decision control flow: 
+ 
+The program chooses different paths based on conditions
+•
+if, elif, else
+•
+match, case
+•
+Iteration (loop) control flow:
+Repeatedly executes a block of code according to a given scheme or rule
+•
+for...in...
+•
+while 
+•
+Jump control flow: 
+ 
+ 
+Change the normal flow inside a loop
+•
+break
+•
+continue
+•
+Function calls control flow : 
+Control jumps to a function, runs its body, then returns to the caller
+•
+return
+•
+(yield)
+•
+Error control flow: 
+ 
+ 
+Changes execution path when an error or exceptional condition occurs
+•
+try, except, else, finally, 
+•
+raise, assert 
+Control flows in Python
+
+5
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+Iteration (looping) control flow:  
+Repeatedly executes a block of code according to a given scheme or rule
+Iteration (loop) control flow
+statement to do
+statement to do
+statement to do
+while ... :
+ 
+statement to do
+ 
+statement to do
+ 
+statement to do
+ 
+statement to do
+statement to do
+statement to do
+statement to do
+statement to do
+statement to do
+statement to do
+for ... in ... :
+ 
+statement to do
+ 
+statement to do
+ 
+statement to do
+ 
+statement to do
+statement to do
+statement to do
+statement to do
+Sequential control flow
+Iteration control flow
+Two types of loops: for and while
+
+6
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+for iterations: 
+Repeatedly executes a block of code over a defined range or sequence of items.
+for iterations
+statement to do
+statement to do
+statement to do
+for ... in ... :
+ 
+statement to do
+ 
+statement to do
+ 
+statement to do
+ 
+statement to do
+statement to do
+statement to do
+statement to do
+Sequential control flow
+Iteration control flow
+
+for loop: iterating through a range object 
+7
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+for iterations can be performed directly on a range object
+
+for loop: iterating through list, tuple and dict objects
+8
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+for iterations can also be applied on any  iterable data structure, in the order provided by that structure.
+iterating through a list
+iterating through a tuple
+iterating through a dict
+iterating through a set
+Order is not preserved !
+
+Iterating “in parallel” through multiple corresponding lists
+9
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+How to iterate through multiple corresponding lists?
+Iterating via an explicit index is possible, but not recommended:
+For example:
+
+Iterating “in parallel” through multiple corresponding lists via zip()
+10
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+The recommended approach: using the zip function
+Advantages:
+•
+No need to explicitly deal with an index and no  need to use range(len())
+•
+Safer in case lists are not of the same size
+•
+Cleaner syntax 
+
+Obtaining enumerating index in for iterations using enumerate()
+11
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+Sometimes we do need to have an access to the iteration index
+The recommended way to achieve this is via the enumerate() function 
+
+12
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+Using enumerate() in combination with zip():
+for iterations combining enumerate()with zip() 
+
+Nested loops
+13
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+External loop
+Internal loop
+Output
+
+14
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+Control Flow: while loops
+while iteration: 
+Repeatedly executes a block of code as long as a specified condition remains true.
+statement to do
+statement to do
+statement to do
+while ... :
+ 
+statement to do
+ 
+statement to do
+ 
+statement to do
+ 
+statement to do
+statement to do
+statement to do
+statement to do
+while (condition):
+ 
+statement to do
+ 
+statement to do
+
+while loop (simple example)
+15
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+while (condition):
+ 
+statement to do
+ 
+statement to do
+
+16
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+•
+Sequential control flow: 
+ 
+Instructions are executed in the order in which they are written
+•
+This is the default flow
+•
+Decision control flow: 
+ 
+The program chooses different paths based on conditions
+•
+if, elif, else
+•
+match, case
+•
+Iteration (loop) control flow: 
+Repeatedly executes a block of code according to a given scheme or rule
+•
+for...in...
+•
+while 
+•
+Jump control flow:
+Change the normal flow inside a loop
+•
+break
+•
+continue
+•
+Function calls control flow : 
+Control jumps to a function, runs its body, then returns to the caller
+•
+return
+•
+(yield)
+•
+Error control flow: 
+ 
+ 
+Changes execution path when an error or exceptional condition occurs
+•
+try, except, else, finally, 
+•
+raise, assert 
+Control flows in Python
+
+“continue” and “break” in a for loop
+“continue”: skips the current iteration
+“break”: exits the iteration loop
+17
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+
+18
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+“continue” and “break” in a while loop
+“continue”: skip the current iteration
+“break”: exit the iteration loop
+
+19
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+Choosing between for loop and while loop
+statement to do
+statement to do
+statement to do
+while ... :
+ 
+statement to do
+ 
+statement to do
+ 
+statement to do
+ 
+statement to do
+statement to do
+statement to do
+statement to do
+statement to do
+statement to do
+statement to do
+for ... in ... :
+ 
+statement to do
+ 
+statement to do
+ 
+statement to do
+ 
+statement to do
+statement to do
+statement to do
+statement to do
+Sequential control flow
+Iteration control flow
+for loop: 
+If we need to iterate over a given list (/set) of elements
+while loop: If we need to iterate until a given condition becomes False
+
+List comprehension
+20
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+List comprehension: 
+Enables to generate a list based on an input iterable data structure by applying a given operation, f(x), on 
+each of the items
+[f(x) for x in iterable if condition]
+Syntax:
+
+21
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+•
+Sequential control flow: 
+ 
+Instructions are executed in the order in which they are written
+•
+This is the default flow
+•
+Decision control flow: 
+ 
+The program chooses different paths based on conditions
+•
+if, elif, else
+•
+match, case
+•
+Iteration (loop) control flow: 
+Repeatedly executes a block of code according to a given scheme or rule
+•
+for...in...
+•
+while 
+•
+Jump control flow: 
+ 
+ 
+Change the normal flow inside a loop
+•
+break
+•
+continue
+•
+Function calls control flow : 
+Control jumps to a function, runs its body, then returns to the caller
+•
+return
+•
+(yield)
+•
+Error control flow: 
+ 
+ 
+Changes execution path when an error or exceptional condition occurs
+•
+try, except, else, finally, 
+•
+raise, assert 
+Control flows in Python
+
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+22
+Toward functions
+For a given rectangle (67 cm width, 8 cm length), we want to calculate:
+•
+the area
+•
+the perimeter
+•
+the aspect ratio
+•
+the diagonal length
+→ requires to repeat the same 
+code (beside the different input)
+Next, we want to calculate the same, but for another rectangle (14 cm width, 10 cm length):  
+
+Functions
+def command to define a function
+Input parameters
+return() returns the values of the variables which are stated within the () and ends the function’s execution
+Returned value(s)
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+23
+function:
+•
+A named block of code that performs a certain set of tasks
+•
+Can accept input values and return results
+•
+Enables reusability and modular organization of the code
+Syntax
+(without returned values)
+Syntax
+(with returned values)
+
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+24
+Functions - a simple example
+Defining a function “analyze_rect”
+to perform this computation:
+Calling the function enable to re-use 
+the same code on other input values
+(here, another rectangle)
+
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+25
+Functions - a simple example
+We can use a function within a loop:
+
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+26
+Functions - a simple example
+Adding to the function return,to return results:
+A function can be called within a call to another function:
+Different ways to retrieve the results:
+The default return of multiple values is a tuple:
+
+Using a function within another function 
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+27
+Before a function is called, all the functions it calls must be already defined !
+
+The function input arguments: Positional arguments 
+Positional arguments:
+•
+The arguments that are passed to a function in a 
+specific order
+•
+The position of each argument matters, as it gets 
+assigned to the corresponding parameter based on the 
+order in the function definition
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+28
+If expected input is not provided → Error
+
+The function input arguments: Keyword arguments 
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+29
+Keyword arguments:
+•
+The arguments that are passed to a function using the parameter name
+•
+The parameter name is used to specify which value goes into which variable
+Input as positional arguments
+Input as keyword arguments
+
+The function input arguments: default values 
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+30
+Setting default values for width and length
+If values are not provided, the defaults are used
+If values are given, they ”overwrite” the defaults
+
+Unpacking an arbitrary number of positional arguments with *args
+*: Unpacking *args (positional arguments)
+ 
+ 
+•
+Receives extra positional arguments and packs them in one tuple
+•
+Used when the number of positional arguments to be passed to a function is not known ahead
+➢Enables to accept a variable number of positional arguments
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+31
+
+**: Unpacking **kwargs (keyword arguments) 
+•
+Used to handle an arbitrary number of keyword arguments 
+•
+Collects all the remaining keyword arguments into a dictionary (dict)
+➢Enables to accept a variable number of keyword arguments
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+32
+Unpacking an arbitrary number of keyword arguments with **kargs
+
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+33
+Input arguments in functions must appear in the follwoing order (from left to right):
+1. Positional-only arguments
+2. Positional or keyword arguments
+3. *args   (variable positional arguments)
+4.  Keyword-only arguments
+5. **kwargs (variable keyword arguments)
+Rules for the order of input arguments of mixed types with *args and **kwargs
+Additional rules:
+•
+All parameters before “/” must be passed positionally
+•
+All parameters after the “*” must be passed using keywords
+•
+All required parameters without defaults must come before parameters with defaults
+A (complicated) example:
+
+Providing input arguments of mixed types with *arg and ** kwargs (example)
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+34
+
+Functions and variable scope: local variables
+Local variabel: A variable created inside a function 
+The scope of a local variable is limited to the function 
+in which it got defined. It is not accessible outside this 
+function.
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+35
+
+Global variable: 
+•
+A variable created outside a function is a global variable
+•
+Functions can read global variables directly
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+36
+Functions and variable scope: global variables
+ Still, the right practice is to provide the function all the variables it needs as input arguments
+
+Global variables within functions
+To modify a global variable inside a function “global” should be used.  
+ As a rule: better to avoid affecting or defining global variables 
+within function, because this:
+➢hampers modularity
+➢is prone to errors 
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+37
+
+Mutability of objects in Python
+Mutability: whether an object can be changed after it is created
+Mutable objects can be modified in place.
+➢Therefore, changes in such an object affect all the references to it. ()
+Examplr for mutable obtects:
+•
+list
+•
+dict
+•
+set
+Immutable objects cannot be modified.
+➢Therefore, any “change” in it actually creates a new object.
+Immutable obtects:
+•
+int
+•
+float
+•
+str
+•
+tuple
+Variables are names (labels) that reference objects in memory
+38
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+
+Immutable object (e.g. int)
+Mutable object (e.g. list)
+39
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+Also changed! (not good)
+Mutability of objects in Python
+
+The importance of mutability for functions
+Variables are names (labels) that reference objects in memory
+Python uses call-by-object-reference
+The function parameter becomes a new name that refers to the same object passed in.
+Immutable object (e.g. int)
+Mutable object (e.g. list)
+a unaffected
+a affected
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+40
+(not good)
+
+The safe way to work with mutable input variables in functions
+Now a is unaffected
+Making a separae list, 
+with the content of x
+x = x.copy() creates a new object and rebinds the local name x. 
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+41
+
+Classes and Objects
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+42
+•
+An ”object“: a combintaion of features and methods 
+•
+A Class is the blueprint for generating an Object
+•
+Each object is an instance of the class that generated it 
+Recatngle is the class
+Rect_1, rect_2, rect_3 are objects generated 
+by the class Rectangle 
+
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+43
+Classes and Objects
+
+Course: Hands-On Data Analytics with Python
+Eli Zamir
+Session 3: Core Python programming (part 2)
+Hands-on session (handout provided separately)
+April 09, 2026
+Hands-on data analytics with Python; Session 3; Dr. Eli Zamir
+44

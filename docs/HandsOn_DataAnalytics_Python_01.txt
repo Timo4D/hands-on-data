@@ -1,0 +1,609 @@
+Hands-On Data Analytics with Python
+Eli Zamir
+Session 1: Introdction
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+1
+
+Eli Zamir
+Self-introduction
+Life-science domain
+Computational aspects
+B.Sc.
+Biology
+Interest in complex systems and their study
+M.Sc.
+Developmental biology
+Tracking cells in embryos
+Ph.D.
+Cell biology
+Image analysis 
+Postdoc I
+Multiplexed optical methods
+High-dimensional data analysis 
+Postdoc II
+Systems biology
+Spectroscopic data analysis, network analysis 
+Group leader
+Systems biology 
+Analysis of high-dimensional, imaging and networks data
+Project leader
+Synthetic biology
+Spectroscopic data analysis
+Computational biology
+Microbiome-cancer relations
+Bioinformatics, big-data, high-dimensional data analysis
+Professional backgroud:  
+Scientific research in life sciences with a strong focus on computational approaches
+E-Mail: Eli.Zamir@hs-aalen.de
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+2
+
+Course structure and schedule
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+3
+
+Course grading
+Grade will be given based on a final project.
+Work on the project should be done independently by each participant, outside of class hours.
+The project will be given after Session 3.
+The project will require:
+•
+Getting an input data (will be provided)
+•
+Applying the analysis modules that were learned
+•
+Implementing also at least one analysis method (Python-based) which was not learned in the course
+•
+Addressing given questions regarding the data
+•
+Coming up with new questions and observations regarding the data, and assessing them as possible
+•
+Submitting a final report in a form of a structured Jupyter-Notebook notebook, which should include: 
+Explanatory texts, code, figures and interpretation of the results
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+4
+
+The objective of data analytics
+The goal of data analytics is deriving insights from the data
+Data
+Insights
+Data analytics
+Information
+Understanding
+Insight: A discovered understanding
+•
+Should be graspable
+•
+Should be useful
+From: Data analytics distills information in order to gain insights
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+5
+
+Distilling information in order to gain insights – a simple example
+Data
+Insights
+Data analytics
+Information
+Understanding
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+6
+
+Tabular data – a universal data structure
+Raw data: The data in the form in which it got originally aqcuired 
+Such data has the form of a table (hence „tabular data“): 
+Data points (=“object”) X Features
+•
+Data point: an individual observed example (“object”) within the dataset. (e.g., a given house)
+•
+Feature: an individual property that describes each data point (e.g., price)
+Most commonly, the data contains values for the features of objects
+For example:
+•
+Objects:    Houses
+•
+Features:  area, location, price,… of each house
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+7
+
+Tabular data – an example
+Data points: street blocks
+Data points
+• MedInc: Median income
+• HouseAge: Median age of houses
+• AveRooms: Average number of rooms per house
+• AveBedrms: Average number of bedrooms per house
+• Population: Total population in the block group
+• AveOccup: Average number of occupants
+• Latitude: Geographic latitude
+• Longitude: Geographic longitude
+• MedHouseVal: Median house price
+Features
+Features:
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+8
+
+Data
+Insights
+data analytics
+What could be useful insights to obtain from this data ? 
+
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+9
+
+Data
+Insights
+•
+Which features affect the most the price of a house?
+•
+Can we predict the price of a house given its features?
+data analytics
+But, why exactly is it difficult to ”directly see” the insights?
+What could be useful insights to obtain from this data ? 
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+10
+
+Why exactly do we need computational approaches to derive insights from data?
+1)
+Data sets are often too large, too complex, and too noisy for patterns to be directly apparent
+2)
+Potential patterns must be quantified and statistically evaluated
+3)
+Learned patterns are needed to be applied to new data to generate further insights and predictions
+•
+Which features affect the most the price of a house?
+•
+Can we predict the price of a house given its features?
+Data
+•
+Is the effect real or just random variation?
+•
+How strong is the effect?
+… based on learned patterns?
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+11
+
+A combination of several factors makes it difficult to directly identify patterns in the data
+(1) Many data points
+➢
+Integration of large amount of information is required
+•
+E.g., data set with 27000 street blocks as data points
+(2) Multiple features
+➢
+Patterns can be multi-parametric (multi-dimensional) →harder to discover, grasp and visualize
+•
+E.g., house price affected by multiple features (age, location, area,...) with interactions between them
+(3) Variance
+➢
+Obscures patterns, unless the features that causing the variance are also taken into account
+•
+E.g., Price of houses with the same number of rooms can vary because of different house-ages. If 
+house-age will not be considered, then the affect rooms on the price will be strongly obscured
+(4) Noise
+➢
+Obscures patterns
+•
+E.g., price of houses with similar features can have fluctuations, due to measurement errors, decision 
+noise, and other unknown affecting factors
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+12
+
+(1) Many data points
+➢
+Integration of large amount of information is required
+(2) Multiple features
+➢
+Patterns can be multi-parametric (multi-dimensional)
+(3) Variance
+➢
+Obscures patterns, unless underline features are 
+taken into account
+(4) Noise
+➢
+Obscures patterns
+How data analytics overcomes data complexity to uncover patterns 
+Data-complexity aspect
+✓
+Computationally easy
+✓
+Becomes highly advantageous for 
+overcoming high-dimensionality, 
+variance and noise
+✓
+Dimensionality reduction
+✓
+Indentifying signatures
+✓
+Features extarction
+✓
+Features selection
+✓
+Overcomes noise by integrating 
+many data points
+✓
+Takes advantage of noise to reveal 
+associations
+✓
+Takes into account multiple features
+✓
+Uses variance as a source of information
+Data analytics aspect
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+13
+
+The structure of the data is universal and so is the type of questions
+street 
+blocks
+Which house features affect the most its price?
+Can we predict the price of a house given its features?
+Street block features
+Economy
+Questions:
+Cells
+Proteins (levels)
+Which proteins affect the most the cell behaviour ?
+Can we predict the behaviour of a cell based on its 
+protein levels ?
+Biology
+A
+B
+C 
+D
+E
+F
+D
+E  . . .
+Questions:
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+14
+
+Learning goals
+(1) Learning Python: 
+•
+As a programming language (core programming) 
+•
+As an interactive environment for exploring and working with data
+•
+As an ecosystem for data analytics (libraries: Pandas, NumPy, SciPy, Matplotlib, Seaborn, Scikit-learn)
+(2) Learning Jupyter Notebook: 
+•
+As an environment for data analysis, documentation and visualization
+(3) Learning to handle and process data:
+•
+Focusing on tabular data: data points × features
+(4) Learning to perform statistical tests: 
+•
+Univariate tests
+•
+Association tests
+(5) Learning to visualize data and analysis results
+(6) Learning to explore high-dimensional data: 
+•
+Cluster analyses
+•
+Dimensionality reduction methods
+(7) Learning to perform regression analyses:
+•
+Predicting numerical outcomes using linear regression and polynomial regression
+•
+Predicting binary categorical outcomes using logistic regression
+•
+Assessing feature contributions to the outcome
+•
+Regularization methods
+(8) Learning to apply machine learning algorithms:
+•
+Focusing on Random Forests
+•
+Implementations for predicting numerical outcomes (regression) and categorical outcomes (classification)
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+15
+
+Session topics
+Session 1: Introduction
+Session 2: Core Python programming (part 1)
+Session 3: Core Python programming (part 2)
+Session 4: Handling and processing data using the Pandas library
+Session 5: Data visualization using the Matplotlib and Seaborn libraries
+Session 6: Statistical Testing with SciPy
+Session 7: Correlation analyses
+Session 8: Processing of high-dimensional data; Cluster analyses
+Session 9: Dimensionality reduction methods
+Session 10: Regression analyses
+Session 11: Logistic regression
+Session 12: Random forests
+Optional session 13: To be decided on
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+16
+
+Python main features
+•
+General-purpose programming language
+•
+Interpreted language (no need to compile) 
+→easy to interact with the code, 
+the data and the results
+•
+Supports multiple programming paradigms: 
+•
+Procedural programming 
+•
+Object-oriented programming 
+•
+Functional programming
+•
+Large ecosystem of third-party:
+•
+NumPy (numerical computing)
+•
+pandas (data handling)
+•
+Matplotlib and Seaborn (data visualization)
+•
+SciPy (scientific computing and statistics)
+•
+scikit-learn (machine learning)
+•
+TensorFlow/PyTorch (deep learning)
+•
+Large and active community of developers and users
+•
+Cross-platform compatibility: Windows, macOS, Linux
+•
+Open source and free
+•
+High applicability across many domains
+•
+Strong tools (Jupyter Notebook , IDEs, terminal)
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+17
+
+“NumPy”: Library for scientific computing
+https://numpy.org
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+18
+
+“SciPy”: Library for scientific computing and statistics
+https://scipy.org
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+19
+
+“pandas”: Library for handling and processing data
+https://pandas.pydata.org/docs/
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+20
+
+“Matplotlib”: Library for data visualization
+https://matplotlib.org
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+21
+
+“Seaborn”: Library for statistical data visualization
+https://seaborn.pydata.org
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+22
+
+“Scikit-learn”: Library for machine learning
+https://scikit-learn.org/
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+23
+
+Jupyter Notebook
+•
+The notebook combines in one interactive document 
+code, visualizations and explanatory text
+•
+The notebook consists of cells: code cells and 
+markdown cells
+•
+The kernel executes the code in the notebook and 
+keeps track of the variables and the imported libraries
+•
+In addition to Python, Jupyter Notebook also supports 
+other languages, such as R
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+24
+
+Jupyter Lab / Jupyter Notebook
+https://docs.jupyter.org/
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+25
+
+Course: Hands-On Data Analytics with Python
+Eli Zamir
+Session 1: Introdction  - Hands-on session 
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+26
+
+Session 1: Hand-on Tasks
+(1) Installing Python
+(2) Installing Jupyter Notebook
+(3) Installing 6 Python libraries: Pandas, Numpy, SciPy, Matplotlib, Seaborn, scikit-learm
+(4) Learning and practicing key Jupyter Notebook features
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+27
+
+(1) Installing Python
+Step 1. Go to the official Python website: 
+https://www.python.org/downloads
+The website should automatically detect 
+your operating system
+Step 2. Click on “Download Python 3.14.3”
+Step 3. Run the installer:
+•
+For Windows operating system:
+a)
+Open the downloaded .exe installer
+b)
+Check the box "Add Python to PATH" before clicking Install Now (!)
+c)
+Follow the prompts to complete the installation.
+•
+For macOS:
+a)
+Open the downloaded .pkg installer file
+b)
+Follow the installer instructions to install Python
+Step 4. Verify the installation:
+a)
+Open Terminal (macOS) or Command Prompt / PowerShell (Windows)
+b)
+Type and execute the command: python3 --version
+•
+The output should be: “Python 3.14.3”
+c)
+Type and execute the command: pip3 --version
+•
+The output should have the pattern: “pip …. From …”
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+28
+
+(2) Installing Jupyter Notebook 
+Step 1: Open Terminal (macOS) or Command Prompt / PowerShell (Windows)
+Step 2: Type and execute the command: python3 -m pip install notebook
+[notice] A new release of pip is available: 25.3 -> 26.0.1
+[notice] To update, run: pip3 install --upgrade pip
+python3 -m pip install --upgrade pip
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+29
+
+(3) Installing Python libraries
+Step 1: Open Terminal (macOS) or Command Prompt / PowerShell (Windows)
+Step 2: Type and execute one-by-one the following 6 commands, to install the 6 libraries:
+•
+python3 -m pip install -U pandas
+•
+python3 -m pip install -U numpy
+•
+python3 -m pip install -U scipy
+•
+python3 -m pip install -U matplotlib
+•
+python3 -m pip install -U seaborn
+•
+python3 -m pip install -U scikit-learn
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+30
+
+Lounching Jupyter Notebook 
+Step 1: Open Terminal (macOS) or Command Prompt / PowerShell (Windows)
+Step 2: Type and execute the command: python3 -m notebook
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+31
+
+Creating a Notebook
+Create a new Notebook:
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+32
+
+Renaming a Notebook
+Rename the file to: YourName_Session_1.ipynb
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+33
+
+Opening the newly-created Notebook 
+Open the Notebook that you created (by double-clicking on its icon)
+In the popuping window 
+select “Python 3“
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+34
+
+Writing a Python code within a cell and running it
+To run a cell: Put the cursur inside the cell, and then press Shift + Enter 
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+35
+
+Writing a Python code within a cell and running it
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+36
+
+Importing a library and using it
+Example: 
+Importing the “Sys” library:
+Using the imported library, to check the Python version:
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+37
+
+Importing libraries
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+38
+
+Jupyter Notebook  exercises 
+Create these cells as Markdown cells, and run them
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+39
+
+Getting on the spot documentation for a function 
+For example, we would like see the documentaton of the function “print”
+Put the cursur at the end of the name of the function, or within a () next to it, and press:
+Shift + Tab
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+40
+
+Getting on the documentation for a function as a cell output 
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+41
+
+Exercise
+Modify this command:
+So that the output will be:
+(1)
+(2)
+Without changing the:
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+42
+
+Exercise: Make a simple plot
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+43
+
+Exercise: Change the plot
+
+Modify the 
+command, to make the size of the markers bigger: 
+March 19, 2026
+Hands-on data analytics with Python; Session 1; Dr. Eli Zamir
+44

@@ -1,0 +1,495 @@
+Course: Hands-On Data Analytics with Python
+Eli Zamir
+Session 6: Statistical testing using the SciPy library
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+1
+
+Update on course sessions and project dates
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+2
+March 19 
+ 
+Session 1 
+ 
+Introduction
+March 26 
+ 
+Session 2 
+ 
+Core Python programming (part 1)
+April 09 
+ 
+Session 3 
+ 
+Core Python programming (part 2)
+April 16 
+ 
+Session 4 
+ 
+Handling and processing data using the Pandas library
+April 23 
+ 
+Session 5 
+ 
+Data visualization using the Matplotlib and Seaborn libraries
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Updated plan:
+April 30 
+ 
+Session 6 
+ 
+Statistical testing with SciPy (group comparisons and correlation analyses)
+May 07 
+ 
+Session 7 
+ 
+Cluster analysis and dimensionality reduction methods
+May 21 
+ 
+Session 8 
+ 
+Regression analyses
+June 11 
+ 
+Session 9 
+ 
+To be decided
+June 18 
+ 
+Session 10 
+ 
+Random forests
+Possibly an additional session will be coordinated to take place, along the 1 st week of of June (since the June 4 Thursday is a holiday).
+Important dates: 
+• Deadline for submitting the project report: 
+15.06.26
+• Material to be projected in the final project: 
+Learned topics from March 19 till May 21
+
+Evaluation criteria for the final project report 
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+3
+
+Analysis guidelines for the project
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+4
+DataAnalyticsPython_Project_Guidelines_29Apr2026.pdf
+These guidelines will also be addressed in the hands-on part of the sessions 
+
+SciPy: Library for scientific computing and statistics
+https://scipy.org
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+5
+
+t-test
+Assumptions:
+1.
+Normal distribution
+2.
+Independence of observations
+3.
+Equal variances (when comparing two groups)
+Types of t-tests:
+•
+One-sample t-test: 
+➢Tests if the population mean is different than an hypothesized mean
+•
+Independent two-sample t-test (Unpaired): 
+➢Tests if the population means of the two independent groups are different
+•
+Paired t-test:
+➢Tests if the mean difference between paired observations is not zero
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+6
+
+One-sample t-test
+Null hypothesis: 
+ 
+𝐻0
+Alternative hypothesis: 𝐻𝐴
+Tests if the population mean (𝜇) is different than a given hypothesized mean (𝜇0)
+Two-sided: 
+ 
+𝐻0: 𝜇= 𝜇0
+𝐻𝐴: 𝜇≠𝜇0
+Right-tailed: 
+ 
+𝐻0: 𝜇≤𝜇0
+𝐻𝐴: 𝜇> 𝜇0
+Left-tailed : 
+ 
+𝐻0: 𝜇≥𝜇0
+𝐻𝐴: 𝜇< 𝜇0
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+7
+
+One-sample t-test: stats.ttest_1samp()
+Simulating data: 
+50 samples, Normal distribution of 
+mean (𝜇)= 100,  standard deviation = 8 
+Two-sided (explicitly stated)
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+8
+Two-sided (default)
+𝐻0: 𝜇= 𝜇0
+𝐻0: 𝜇= 𝜇0
+Right-tailed
+𝐻0: 𝜇≤𝜇0
+Left-tailed
+𝐻0: 𝜇≥𝜇0
+
+Independent two-sample t-test (Unpaired)
+Tests if the population means (𝜇1, 𝜇2) of the two independent groups are different
+Two-sided: 
+ 
+𝐻0: 𝜇1 = 𝜇2
+𝐻𝐴: 𝜇1 ≠𝜇2
+Right-tailed: 
+ 
+𝐻0: 𝜇1 ≤𝜇2
+𝐻𝐴: 𝜇1 > 𝜇2
+Left-tailed: 
+ 
+𝐻0: 𝜇1 ≥𝜇2
+𝐻𝐴: 𝜇1 < 𝜇2
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+9
+Null hypothesis: 
+ 
+𝐻0
+Alternative hypothesis: 𝐻𝐴
+
+Independent two-sample t-test (Unpaired): stats.ttest_ind()
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+10
+𝜇1 = 50
+𝜇2 = 50
+𝜇3 = 53
+Simulating 3 groups:
+
+Welch’s t-test: stats.ttest_ind(equal_var=False) 
+Default (wrong here)
+Welch’s t-test
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+11
+Simulating 2 groups, 
+different means 
+& different variance
+
+Paired t-test
+Tests if the mean difference between paired observations (𝜇𝑑) is not 0
+Two-sided: 
+ 
+𝐻0: 𝜇𝑑= 0
+𝐻𝐴: 𝜇𝑑≠0
+Right-tailed: 
+ 
+𝐻0: 𝜇𝑑≤0
+𝐻𝐴: 𝜇𝑑> 0
+Left-tailed: 
+ 
+𝐻0: 𝜇𝑑≥0
+𝐻𝐴: 𝜇𝑑< 0
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+12
+Null hypothesis: 
+ 
+𝐻0
+Alternative hypothesis: 𝐻𝐴
+
+Paired t-test: stats.ttest_rel()
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+13
+Case 1: Consistent tendency of each object to increase
+Case 2: Some objects increase, some decrease
+Paired 
+test
+Independent 
+test
+(wrong here)
+
+Testing if a distribution is a Normal distribution: stats.shapiro()
+Shapiro–Wilk test: Tests whether the data is consistent with a Normal distribution
+•
+Null hypothesis (H₀): The data come from a Normal distribution
+•
+Alternative hypothesis (HA): The data does not come from a Normal distribution
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+14
+Not a Normal 
+distribution
+A Normal 
+distribution
+
+Mann-Whitney U rank test for two independent samples: stats.mannwhitneyu()
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+15
+The data is not normally distributed
+Non-parametric test is needed
+stats.mannwhitneyu()
+
+Wilcoxon signed-rank test for two paired samples: stats.wilcoxon()
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+16
+stats.wilcoxon()
+“before_1” vs. “after_1” 
+“before_1” vs. “after_2” 
+
+FDR correction (introduction)
+P-value: 
+The probability of observing, by chance, a difference as large as or larger than the one in our data, 
+assuming the null hypothesis is true.
+When testing a single null hypothesis (e.g. when comparing two groups):
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+17
+
+Simulated data; 
+All groups are sampled from the same distribution
+→ Here, any inferred “Positive” would be a false positive
+So here, in this case, no false positive
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+18
+FDR correction (introduction)
+
+FDR correction
+Here 13 false positive cases
+Here 47 false positive cases
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+19
+
+FDR correction
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+20
+
+FDR correction
+False discovery rate (FDR) =   
+Total number of false positives
+Total number of positives (true+false) 
+When testing multiple null hypotheses at once (e.g. when comparing multiple pairs of groups):
+”Positive”: a case in which the null hypothesis gets rejected
+”False positive”: a case in which the null hypothesis is rejected but the null hypothesis is actually true
+”True positive”: a case in which the null hypothesis is rejected and the alternative hypothesis is indeed true
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+21
+FDR correction: A procedure to controls the fraction of significant results that are likely false discoveries
+
+FDR correction
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+22
+
+FDR correction
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+23
+
+ANOVA
+One-way ANOVA tests the null hypothesis that all groups have the same population mean
+Null hypothesis (H₀):  
+ 
+ 
+𝐻0: 𝜇1 = 𝜇2 = 𝜇3 = ⋯= 𝜇𝑛
+𝜇1 = population mean of group I
+𝑛 = total number of groups
+Alternative hypothesis (H1):  
+ 
+At least one group mean is different
+The test does not identify which group is different
+Assumptions:
+•
+Normal distributions
+•
+Independent observations
+•
+Similar variance
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+24
+
+ANOVA test: f_oneway
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+25
+
+Kruskal–Wallis H-test
+The Kruskal-Wallis H-test tests the null hypothesis that all groups have the same population median
+To be used when the ANOVA assumptions are violated
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+26
+
+Post-hoc tests
+In case ANOVA test / Kruskal-Wallis H-test reject the null hypothesis:
+➢Post-hoc tests can be applied to identify which groups are different
+➢This is done by performing pair-wise group comparison tests for all possible pair-wise 
+combinations:
+•
+Mann–Whitney test (to follow Kruskal-Wallis H-test) 
+•
+T-test (to follow-up ANOVA)
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+27
+Practical tip:
+post-hoc analysis can be achieved using a nested for loops to cover all possible pair-wise 
+combinations of features, and thus performing the comparison test for each possible features-pair.
+
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+28
+Testing for association between two categorical variables: Fisher exact test
+
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+29
+Testing for association between two categorical variables: Chi-Square Test
+
+Chi-Square Test for tables bigger than 2x2 tables
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+30
+
+Chi-Square Test for tables bigger than 2x2 tables
+Identifying the main contributors for significance p-value: 
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+31
+
+Chi-Square test versus Fisher exact test
+Fischer exact test
+Chi-Square Test
+Contingency table site
+2x2 
+(in the direct implementation) 
+Any table ≥2x2
+(yet commonly not much bigger) 
+Assumptions
+•
+Observations are independent
+•
+Expected counts ≥ 5 in most cells
+•
+Observations are independent
+•
+No assumption about expected counts
+When to use
+2x2 tables and low counts
+> 2x2 tables or 2x2 tables with 
+many counts 
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+32
+
+Aspects of monotonous relations between 2 continuum features
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+33
+Direction: Positive / Negative
+Strength: Weak / Strong
+Type: Linear / Non-linear
+no relation
+
+Pearson correlation test: pearsonr
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+34
+pearsonr
+.correlation
+.pvalue
+.correlation = r → Indicates the strength and direction of the correlation, spans from -1 to +1:
+ 
+ 
+ 
+ 
+ 
+r = +1 strong positive linear correlation
+ 
+ 
+ 
+ 
+ 
+r = -1 strong negative linear correlation
+ 
+ 
+ 
+ 
+ 
+r = 0 no linear correlation 
+.pvalue  
+ 
+→ The significance of the correlation
+
+Pearson correlation test: correlation direction
+Conclusion: no linear correlation
+Conclusion: Significant positive linear correlation
+Conclusion: Negative linear correlation
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+35
+
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+36
+Pearson correlation test: correlation strength
+•
+r indicates both the direction and the strength of th correlation
+•
+But: it is meaningful to interpret r only if the p-value indicates that the correlation is significant!
+Weaker 
+correlation
+Stronger 
+correlation
+
+Assessing nonlinear correlations: Spearman 
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+37
+spearmanr()
+Spearman correlation:
+•
+Tests and quantifies the monotonicity of the relationship
+•
+Converts the values to rank and then calculates for it Pearson correlation
+•
+Correlation strength: indicated by Spearman’s rho (Spearman’s ) :  spans from 
+-1 (strong negative correlation) to +1 strong negative correlation) 
+
+Assessing nonlinear correlations: Kendall 
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+38
+kendalltau()
+Kendall correlation:
+•
+Tests and quantifies the monotonicity of the relationship
+•
+Correlation strength: indicated by Kendall’s tau (Kendall ):  spans from -1 
+(strong negative correlation) to +1 strong negative correlation) 
+•
+Relatively less to sensitive to ”tied ranks” (repeated values)
+
+April 30, 2026
+Hands-on data analytics with Python; Session 6; Dr. Eli Zamir
+39
+Quantifying nonlinear correlations strength and direction

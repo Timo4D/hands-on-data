@@ -1,0 +1,1003 @@
+Course: Hands-On Data Analytics with Python
+Eli Zamir
+Session 8: Regression and logistic regression analyses
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+1
+
+Regression analysis
+Regression analysis:
+A statistical method to model and estimate the relationship between a dependent variable and one or more 
+independent variables.
+•
+Infers the direction (sign) of this relation and quantifies how strong it is
+•
+Identifies which independent variables are the most influential ones
+•
+Enables to predict the value of the dependent variable given values of the independent variables
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+2
+
+Simple linear regression
+Linear regression: assumes that the relationship between the independent variable(s) and 
+the dependent variable is linear.
+Simple linear regression: is a private case of linear regression, in which there is only one 
+independent variable. 
+The simple linear regression model: 
+Assumptions: Linearity, Independence, Homoscedasticity, Normality of errors
+𝑦= 𝛽0 + 𝛽1𝑋+ 𝜀
+𝑌: The dependent variable
+𝑋: The independent variable (“predictor”)
+𝛽0: The intercept
+𝛽1: The coefficient of the predictor
+𝜖 : Error term
+Where:
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+3
+
+Simple linear regression: generating example data
+𝑦= 𝛽0 + 𝛽1𝑋+ 𝜀
+𝑋
+𝑦
+𝛽1
+𝛽0
+𝜀
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+4
+
+Simple linear regression: preparing the data
+.reshape(-1, 1) 
+reshapes an array into a 2D 
+column vector
+(-1 means "infer this 
+dimension automatically" 
+and 1 means "1 column”)
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+5
+
+Simple linear regression: fitting
+coef: the inferred value for 𝛽1 
+intercept: the inferred value for 𝛽0 
+r2:    R2 = 1 −(residuals sum of square) / (total sum of square)
+The ground-truth values:
+(i.e. the values used to generate the data)
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+6
+
+Simple linear regression: visualizing the model fit 
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+7
+Predicating the y values
+for the original x1 values:
+
+Predicating y values for new input values
+Extrapolated prediction
+(but is the model still valid in 
+these input regions ?)
+Interpolated prediction
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+8
+Simple linear regression: predictions for new input values
+Data used for the fitting
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+9
+Simple linear regression: assessing the residuals
+residuals:
+
+The residuals have a clear pattern
+→ Therefore, simple linear regression model is not proper here 
+Indeed, the relation between x1 and y_b, as simulated, is not linear:
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+10
+Simple linear regression: assessing the residuals
+
+Linear regression: Evaluation measures
+R² Score (Coefficient of Determination)
+RMSE (Root Mean Squared Error)
+MAE (Mean Absolute Error)
+𝑅2 = 1 −
+σ 𝑦𝑜𝑏𝑠𝑒𝑣𝑒𝑑−𝑦𝑝𝑟𝑒𝑑𝑖𝑐𝑡𝑒𝑑
+2
+𝑦𝑜𝑏𝑠𝑒𝑟𝑣𝑒𝑑−𝑦𝑜𝑏𝑠𝑒𝑟𝑣𝑒𝑑2
+𝑅𝑀𝑆𝐸=
+1
+𝑛෍𝑦𝑜𝑏𝑠𝑒𝑟𝑣𝑒𝑑−𝑦𝑝𝑟𝑒𝑑𝑖𝑐𝑡𝑒𝑑
+2
+𝑀𝐴𝐸= 1
+𝑛𝑦𝑜𝑏𝑠𝑒𝑟𝑣𝑒𝑑−𝑦𝑝𝑟𝑒𝑑𝑖𝑐𝑎𝑡𝑒𝑑
+• Assess the overall model quality
+• Quantifies the proportion of variance explained by the model
+• Value can span from 0 to 1 (higher values: better fit)
+• Quantifies the prediction errors using the original units of 𝑦 
+• Panelizes large errors more. 
+• Sensitive to outliers
+• As RMSE, quantifies the prediction errors using the original units of 𝑦 
+• Does not panelize large errors. Less sensitive to outliers
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+11
+
+R² Score:
+RMSE:
+MAE:
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+12
+Linear regression: Evaluation measures
+
+Multiple linear regression
+Multiple linear regression: A linear regression considering more than one independent variable
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+13
+𝑦= 𝛽0 + 𝛽1𝑥1 + 𝛽2𝑥2 + ⋯+ 𝛽𝑛𝑥𝑛+ 𝜀
+𝑦: 
+ 
+   The dependent variable
+𝑥1, 𝑥2, ⋯, 𝑥𝑛:  The independent variables (“predictors”)
+𝛽0:                     The intercept
+𝛽1, 𝛽2, ⋯, 𝛽𝑛:  The coefficients of the predictors
+𝜖 :                      Error term
+Where:
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+14
+Multiple linear regression: generating example data
+
+Trying to infer the coefficients using only one feature at a time
+Trying to predict y and  only using only one feature:
+Bad fit quality and inaccurate  estimation 
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+15
+
+Multiple Linear Regression: using multiple features 
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+16
+But: we did not apply data standardization, is this still correct?
+
+Multiple linear regression: A linear regression considering more than one independent variable
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+17
+𝑦= 𝛽0 + 𝛽1𝑥1 + 𝛽2𝑥2 + ⋯+ 𝛽𝑛𝑥𝑛+ 𝜀
+𝑦: 
+ 
+   The dependent variable
+𝑥1, 𝑥2, ⋯, 𝑥𝑛:  The independent variables (“predictors”)
+𝛽0:                     The intercept
+𝛽1, 𝛽2, ⋯, 𝛽𝑛:  The coefficients of the predictors
+𝜖 :                      Error term
+Where:
+Multiple Linear Regression: assessing the importance of features
+Features with a higher 𝛽coefficient value have a stronger effect on 𝑦 
+Accordingly: the higher 𝛽 of a feature is, the more important it is 
+
+Multiple Linear Regression: assessing the importance of features
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+18
+But: we did not apply data standardization, is this correct?
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+19
+Multiple linear regression: using standardized data 
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+20
+Multiple linear regression: using standardized data 
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+21
+Multiple linear regression: the need for data standardization 
+Without data standardization
+With data standardization
+For multiple linear regression data standardization is essential for:
+•
+Making the coefficients comparable
+•
+Enabling to correctly comparw the importance of different features
+•
+Preventing dominance by large scale features
+•
+Enabling to apply regularization methods (described later on)
+Wrong!
+
+Polynomial regression
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+22
+
+Univariate polynomial regression: 
+Regression where the relationship between a single input feature and the target variable is 
+modeled using a polynomial equation
+Univariate polynomial regression
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+23
+𝑦= 𝛽0 + 𝛽1𝑥+ 𝛽2𝑥2 + 𝛽3𝑥3 + ⋯+ 𝛽𝑛𝑥𝑛+ 𝜀
+𝑦: 
+ 
+   The dependent variable
+𝑥:  
+ 
+   The independent variables (“predictors”)
+𝛽0:                     The intercept
+𝛽1, 𝛽2, ⋯, 𝛽𝑛:  The coefficients of x in the various power
+𝜖 :                      Error term
+Where:
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+24
+Univariate polynomial regression: implementation
+PolynomialFeatures()
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+25
+Univariate polynomial regression
+Data 
+polynomial degree
+1
+2
+3
+Model polynomial degree
+1
+2
+3
+
+Multivariate polynomial regression
+Multivariate polynomial regression: 
+Extends polynomial regression to multiple input features, modeling the target variable 
+using polynomial terms and interactions between the features
+Number of coefficients = 𝑑+ 𝑓!
+𝑑! 𝑓!
+𝑑: polynomial degree
+𝑓: number of input features
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+26
+𝑦= 𝛽0 + 𝛽1𝑥1 + 𝛽2𝑥2 + 𝛽3𝑥1
+2 + 𝛽4𝑥2
+2 + 𝛽5𝑥1𝑥2 + ⋯+ 𝜀
+𝑦: 
+ 
+   The dependent variable
+𝑥:  
+ 
+   The independent variables (“predictors”)
+𝛽0:                     The intercept
+𝛽1, 𝛽2, ⋯, 𝛽𝑛:  The coefficients of x in the various power and combinations
+𝜖 :                      Error term
+Where:
+
+Multivariate polynomial regression
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+27
+
+Underfitting and overfitting
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+28
+Which model fits best the data? Why?
+
+Underfitting and overfitting
+Underfitting
+Good fit
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+29
+Overfitting
+Underfitting: 
+The model is too simple to capture the underline pattern
+Overfitting:   
+The model has too much flexibility (complexity) and therefore learns also random noise
+How to identify and avoid overfitting?
+
+Underfitting and overfitting
+Underfitting
+Good fit
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+30
+Overfitting
+How to identify and avoid overfitting?
+Lowest R and higher RMSE
+Highest R and lowest RMSE
+!!!
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+31
+To avoid underfitting, it is generally sufficient to reduce prediction error by increasing the model complexity 
+and its ability to learn patterns from the data
+However, avoiding overfitting requires additional approaches.
+Main approaches to avoid overfitting:
+1)
+Separating the training of the model from its evaluation, by using separate:
+•
+training data set
+•
+validation data set
+•
+test data set
+➢
+This helps evaluate how well the model generalizes to new data.
+2)
+Regularization: Penalizing excessive model complexity (degrees of freedom)
+•
+Ridge regression
+•
+Lasso regression
+•
+Elastic Net
+Identifying and avoiding underfitting and overfitting
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+32
+To avoid underfitting, it is generally sufficient to reduce prediction error by increasing the model complexity 
+and its ability to learn patterns from the data
+However, avoiding overfitting requires additional approaches.
+Main approaches to avoid overfitting:
+1)
+Separating the training of the model from its evaluation, by using separate:
+•
+training data set
+•
+validation data set
+•
+test data set
+➢
+This helps evaluate how well the model generalizes to new data.
+2)
+Regularization: Penalizing excessive model complexity (degrees of freedom)
+•
+Ridge regression
+•
+Lasso regression
+•
+Elastic Net
+Identifying and avoiding underfitting and overfitting
+
+Partitioning the data to train set and test set
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+33
+
+Separating the training of the model from its evaluation
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+34
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+35
+Separating the training of the model from its evaluation
+Underfitting
+Overfitting
+Good fit
+Test set
+Train set
+Train 
+Test 
+Performance 
+Bad
+Bad
+Best
+Bad
+Good
+Good
+
+Logistic regression
+Logistic regression:
+•
+Based on regression, but is used for classification
+•
+Infers the probability that a certain sample belongs to a particular class (from 2 classes)
+➢Then, given a probability threshold (typically 0.5), it classifies the sample to one of the classes 
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+36
+
+Logistic regression implements a linear regression model in a  logistic function
+𝑦= 𝛽0 + 𝛽1𝑥1 + 𝛽2𝑥2 + ⋯+ 𝛽𝑛𝑥𝑛+ 𝜀
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+37
+Multiple linear regression:
+𝜎𝑡=
+1
+1 + 𝑒−𝑡
+Logistic function (also called sigmoid function):
+𝑝=
+1
+1 + 𝑒−𝛽0+𝛽1𝑥1+𝛽2𝑥2+⋯+𝛽𝑛𝑥𝑛+𝜀
+“Plugging” the linear regression term into the logistic function (as 𝑡):
+𝛽0 + 𝛽1𝑥1 + 𝛽2𝑥2 + ⋯+ 𝛽𝑛𝑥𝑛+ 𝜀
+𝑝
+
+Logistic regression: with one input feature
+𝑝=
+1
+1 + 𝑒−𝛽0+𝛽1𝑥1+𝜀
+𝛽0 + 𝛽1𝑥1
+𝑝
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+38
+
+Logistic regression: generating example data
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+39
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+40
+Logistic regression: generating example data
+
+Logistic regression: implementation
+𝑝=
+1
+1 + 𝑒−𝛽0+𝛽1𝑥1
+𝛽0
+𝛽1
+where: p= P(y = 1 | x1)
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+41
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+42
+Logistic regression: drawing the model fit
+
+𝑝=
+1
+1 + 𝑒−𝛽0+𝛽1𝑥1
+𝛽0
+𝛽1
+𝑝𝑥1 = −𝛽0
+𝛽1
+=
+1
+1 + 𝑒0 = 1
+2
+The decision threshold (based on p = 0.5) is: 
+−𝛽0
+𝛽1  
+Here: 
+−𝛽0
+𝛽1   = 
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+43
+Logistic regression: interpreting the model fit
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+44
+Logistic regression: partitioning the data to train set and test set 
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+45
+Logistic regression: training and evaluating the model
+
+The possible classification outcomes for each instance
+Lets label class 1 as “Positive” class and class 0 as “Negative” class
+For each instance there are 4 possible classification outcomes:
+Actual class label 
+Predicted class label 
+Actual label 
+Predicted label  
+→ 
+Classification outcome
+Positive 
+ 
+ Positive 
+ 
+ 
+→ 
+True Positive (TP)
+Negative  
+ Negative  
+ 
+→ 
+True Negative (TN)
+Negative  
+ Positive 
+ 
+ 
+→ 
+False Positive (FP)
+Positive 
+ 
+ Negative  
+ 
+→ 
+False Negative (FN)
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+46
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+47
+The confusion matrix
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+48
+The confusion matrix
+
+The classification decision threshold
+The total number of TP + TN + FP + FN always equals to the total number of instances in the dataset
+But, the relative fraction of TP, TN, FP and FN depends on the decision threshold.
+Any given confusion matrix is based on a specific decision threshold
+•
+By default, the decision threshold is p = 0.5.
+•
+Lower decision threshold : 
+ 
+→ Higher chance to get more True Positives (meaning also less False Negatives )
+ 
+→ Higher risk to get also more False Positives (meaning also less True Negatives)
+e.g., here TP + TN + FP + FN = 50 0 the number of  samples in the test dataset 
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+49
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+50
+The classification decision threshold
+
+The tradeoff in binary classification tasks
+The decision threshold:
+Risk to have a 
+false positive 
+Risk to miss a 
+true positive 
+Decision threshold 
+0
+1
+0.5
+ො𝑦= ቊ1 if
+Ƹ𝑝𝑦= 1 𝑥) ≥𝜏
+0 if
+Ƹ𝑝𝑦= 1 𝑥) < 𝜏
+ො𝑝
+𝜏= 0.5
+There is an inherent tradeoff:
+In this case:
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+51
+
+The dependency in the decision threshold
+Risk to have a 
+false positive 
+Risk to miss a 
+true positive 
+Decision threshold 
+0
+1
+0.5
+Decision threshold 
+0
+1
+0.5
+Decision threshold 
+0
+1
+0.5
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+52
+
+Choosing the decision threshold
+The decision which decision threshold to choose depends on our goal:
+•
+If false positives and false negatives are equally tolerable for our purpose: 
+➢= 0.5 would be an optimal decision threshold
+•
+If we want to reduce the risk of missing real positives and can tolerate false positives 
+(e.g. cancer screen test): 
+➢ < 0.5 would serve this goal
+•
+If we want to reduce the risk of having false positives and can tolerate false negatives 
+(e.g. identifying molecular markers and targets for diagnostics and therapy): 
+➢ > 0.5 would serve this goal
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+53
+
+The ROC curve
+ROC: Receiver Operating Characteristic
+True Positive Rate (TPR) ≡
+TP
+TP+FN
+The ROC curve is a graph that shows how a binary classifier performs across all possible decision thresholds.
+Each point along the curve correspond to a different decision threshold
+For each decision threshold, 2 outcomes are measured:    
+False Positive Rate (FPR) ≡
+FP
+FP+TN
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+54
+In order to assess how good a given classifier classifies a given data, we need to comprehensively 
+consider the whole range of decision thresholds.
+
+TP
+TP + FN
+RUC AUC: Area Under the ROC Curve
+•
+RUC AUC = 1 implies a perfect classifier
+•
+RUC AUC = 0.5 implies that the classifier is not better than random guessing
+•
+RUC AUC < 0.5 implies a classifier worse than random guessing
+Shows the trade-off between finding the 
+true positives and getting false positives 
+FP
+FP + TN
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+55
+The ROC curve
+
+Deriving the ROC curve
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+56
+
+The ROC curve
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+57
+
+𝑦= 𝛽0 + 𝛽1𝑥1 + 𝛽2𝑥2 + ⋯+ 𝛽𝑛𝑥𝑛+ 𝜀
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+58
+Multiple linear regression:
+𝜎𝑡=
+1
+1 + 𝑒−𝑡
+Logistic function (also called sigmoid function):
+𝑝=
+1
+1 + 𝑒−𝛽0+𝛽1𝑥1+𝛽2𝑥2+⋯+𝛽𝑛𝑥𝑛+𝜀
+“Plugging” the linear regression term into the logistic function (as 𝑡):
+𝛽0 + 𝛽1𝑥1 + 𝛽2𝑥2 + ⋯+ 𝛽𝑛𝑥𝑛+ 𝜀
+𝑝
+Logistic regression: multiple input features
+
+The “breast cancer” dataset of scikit-learn
+0: malignant
+1: benign
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+59
+
+The “breast cancer” dataset of scikit-learn
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+60
+
+Logistic regression: Partitioning the data to train set and test set 
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+61
+0: malignant
+1: benign
+
+Logistic regression: data standardization of the train and test sets
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+62
+The mean and the std are calculated using only the train data set,
+and applied these values for the standardization of both the train and the test data sets 
+.fit_transform(X_train)
+.transform(X_test)
+
+Logistic regression: multiple input features
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+63
+
+Logistic regression: multiple input features
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+64
+𝑝=
+1
+1 + 𝑒−𝛽0+𝛽1𝑥1+𝛽2𝑥2+⋯+𝛽𝑛𝑥𝑛+𝜀
+
+Logistic regression: using multiple input features vs. single features
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+65
+Using all features
+Using only the most 
+important feature
+Using only the worse feature
+radius error
+texture error
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+66
+To avoid underfitting, it is generally sufficient to reduce prediction error by increasing the model complexity 
+and its ability to learn patterns from the data
+However, avoiding overfitting requires additional approaches.
+Main approaches to avoid overfitting:
+1)
+Separating the training of the model from its evaluation, by using separate:
+•
+training data set
+•
+validation data set
+•
+test data set
+➢
+This helps evaluate how well the model generalizes to new data.
+2)
+Regularization: Penalizing excessive model complexity (degrees of freedom)
+•
+Ridge regression
+•
+Lasso regression
+•
+Elastic Net
+Identifying and avoiding underfitting and overfitting
+
+Underfitting and overfitting
+Underfitting
+Correct fit
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+67
+Overfitting
+How to identify and avoid overfitting?
+Lowest R and higher RMSE
+Highest R and lowest RMSE
+!!!
+
+Linear Regression: the cost function
+𝑦= 𝛽0 + 𝛽1𝑥1 + 𝛽2𝑥2 + ⋯+ 𝛽𝑛𝑥𝑛+ 𝜀
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+68
+Regression training solves: Find the 𝛽s that minimize of the cost function:
+cost function = 1
+𝑛෍
+𝑖=1
+𝑛
+ො𝑦𝑖−𝑦𝑖2
+𝑦−
+𝛽0 + 𝛽1𝑥1 + 𝛽2𝑥2 + ⋯+ 𝛽𝑛𝑥𝑛= 𝜀
+𝑦−ො𝑦= 𝜀
+𝑦= the predicted values
+ො𝑦= the predicted values
+Regularization methods add to the cost function also penalty on the size of the coefficients (𝛽s)
+
+Regularization methods: Lasso (L1), Ridge (L2) and Elastic net
+Ridge penalty (L2) = ෍
+𝑖=1
+𝑛
+𝛽𝑖
+2
+Lasso penalty L1
+= ෍
+𝑖=1
+𝑛
+𝛽𝑖
+Elastic net penalty = 𝜆1 ෍
+𝑖=1
+𝑛
+𝛽𝑖
++ 𝜆2 ෍
+𝑖=1
+𝑛
+𝛽𝑖
+2
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+69
+cost function = 1
+𝑛෍
+𝑖=1
+𝑛
+ො𝑦𝑖−𝑦𝑖2 + ෍
+𝑖=1
+𝑛
+𝛽𝑖
+cost function = 1
+𝑛෍
+𝑖=1
+𝑛
+ො𝑦𝑖−𝑦𝑖2 + ෍
+𝑖=1
+𝑛
+𝛽𝑖
+2
+cost function = 1
+𝑛෍
+𝑖=1
+𝑛
+ො𝑦𝑖−𝑦𝑖2 + 𝜆1 ෍
+𝑖=1
+𝑛
+𝛽𝑖
++ 𝜆2 ෍
+𝑖=1
+𝑛
+𝛽𝑖
+2
+
+Regularization methods: Simulating example data and preparing it
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+70
+Generating an example data:
+50 features, but only 10 of 
+them ( the first 10) are 
+informative
+Standardizing the data:
+Essential (also) for applying 
+regularization methods !
+Partitioning the data to train 
+set and test set:
+
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+71
+Logistic regression without regularization
+penalty = None
+
+Logistic regression without regularization
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+72
+cost function = 1
+𝑛෍
+𝑖=1
+𝑛
+ො𝑦𝑖−𝑦𝑖2
+Logistic regression without regularization
+
+Logistic regression with Lasso regularization (L1)
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+73
+penalty = “l1”
+C = 
+C: the inverse of the regularization strength
+
+Logistic regression with Lasso regularization (L1)
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+74
+cost function = 1
+𝑛෍
+𝑖=1
+𝑛
+ො𝑦𝑖−𝑦𝑖2 + ෍
+𝑖=1
+𝑛
+𝛽𝑖
+Logistic regression with Lasso regularization (L1)
+
+Logistic regression with Ridge regularization (L2)
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+75
+penalty = “l2”
+C = 
+C: the inverse of the regularization strength
+
+Logistic regression with Ridge regularization (L2)
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+76
+Logistic regression with Ridge regularization (L2)
+cost function = 1
+𝑛෍
+𝑖=1
+𝑛
+ො𝑦𝑖−𝑦𝑖2 + ෍
+𝑖=1
+𝑛
+𝛽𝑖
+2
+
+Logistic regression with Elastic net (L1 + L2)
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+77
+penalty = “elasticnet”
+C = 
+l1_ratio =
+l1_ratio:
+•
+The Elastic-Net mixing parameter, with `0 <= l1_ratio <= 1` 
+•
+l1_ratio=1 → a pure L1-penalty
+•
+l1_ratio=0 → a pure L2-penalty
+C: the inverse of the regularization strength
+
+Logistic regression with Elastic net (L1 + L2)
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+78
+cost function = 1
+𝑛෍
+𝑖=1
+𝑛
+ො𝑦𝑖−𝑦𝑖2 + 𝜆1 ෍
+𝑖=1
+𝑛
+𝛽𝑖
++ 𝜆2 ෍
+𝑖=1
+𝑛
+𝛽𝑖
+2
+Logistic regression with Elastic net regularization:
+
+Lasso vs. Ridge regularization
+May 21, 2026
+Hands-on data analytics with Python; Session 8; Dr. Eli Zamir
+79
+Lasso (L1)
+Ridge (L2)
+𝛽1
+𝛽2
+𝛽2
+cost function = 1
+𝑛෍
+𝑖=1
+𝑛
+ො𝑦𝑖−𝑦𝑖2 + ෍
+𝑖=1
+𝑛
+𝛽𝑖
+2
+cost function = 1
+𝑛෍
+𝑖=1
+𝑛
+ො𝑦𝑖−𝑦𝑖2 + ෍
+𝑖=1
+𝑛
+𝛽𝑖
+min
+𝛽1
+min
+Lasso can shrink coefficients 
+exactly to zero
+→ good for feature selection
+Ridge shrink coefficients 
+towards zero

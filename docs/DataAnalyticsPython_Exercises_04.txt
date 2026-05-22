@@ -1,0 +1,138 @@
+Hands-on data analy,cs with Python; Dr. Eli Zamir                                                        Session 4 Exercises; April 16, 2026 
+ 
+1 
+The hands-on part of this session combines: 
+(1) Prepara8on of the project data 
+(2) Prac8cing handling and processing of tabular data using the pandas library 
+ 
+Step1: Loading the dataset 
+ 
+Preferably: 
+ 
+Load the dataset directly from the scikit-learn repository  
+ 
+Note: This should be the way in which the data is imported in your Jupyter Notebook for the ﬁnal 
+project report. 
+ 
+Alterna8vely, for the sake of the exercise, as a temporary solu8on:  
+ 
+Load the data from the ﬁle deposited in the canvas board, as follows: 
+ 
+ 
+ 
+In both ways, the following data frame should be obtained at the end (verify this): 
+ 
+  
+
+Hands-on data analy,cs with Python; Dr. Eli Zamir                                                        Session 4 Exercises; April 16, 2026 
+ 
+2 
+Step2: Renaming the columns 
+ 
+Rename the columns of df_diabetes_raw as follow (original name ---> new name): 
+ 
+age ---> Age 
+sex ---> Gender 
+ bmi ---> BMI 
+ bp  ---> BP 
+ s1  ---> TC 
+ s2  ---> LDL 
+ s3  ---> HDL 
+ s4  ---> TCH 
+ s5  ---> LTG 
+ s6  ---> Glu 
+target ---> Progression 
+ 
+Hint: use the .rename() method of DataFrame 
+ 
+At the end of this stage you should obtain for df_diabetes_raw: 
+ 
+ 
+ 
+Step3: Renaming the index 
+ 
+Rename the index of df_diabetes_raw  index to obtain the following: 
+ 
+ 
+ 
+
+Hands-on data analy,cs with Python; Dr. Eli Zamir                                                        Session 4 Exercises; April 16, 2026 
+ 
+3 
+ 
+ 
+ 
+Hint 1: to rename the index, use df_diabetes_raw.index =  (and then the appropriate 
+term) 
+ 
+Hint 2:   
+ 
+ 
+ 
+ 
+Hint 3:  
+ 
+ 
+ 
+ 
+Step 4: Re-encoding the values in the Gender column 
+ 
+Change the values in the Gender column as follows (original value ---> renamed value): 
+ 
+1.0 
+--->    “Female” 
+2.0 
+--->.   “Male” 
+ 
+Hint: You need ﬁrst to change the data type of the Gender column, using .astype() 
+ 
+ 
+ 
+ 
+At the end of this step 4 you should obtain: 
+ 
+
+Hands-on data analy,cs with Python; Dr. Eli Zamir                                                        Session 4 Exercises; April 16, 2026 
+ 
+4 
+ 
+ 
+Step 5: Separate the df_diabetes_raw data frame to two data frames 
+ 
+Divide the df_diabetes_raw data frame to two data frames: 
+• df_diabetes_metadata containing the "Age", "Gender" features 
+• df_diabetes_features containing the other features ('BMI', 'BP', 'TC', 'LDL', 'HDL', 
+'TCH', 'LTG', 'Glu','Progression') 
+ 
+Both data frames should have the same index, as of the index of df_diabetes_raw  (and in the 
+same order) 
+ 
+At the end you should obtain: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Hands-on data analy,cs with Python; Dr. Eli Zamir                                                        Session 4 Exercises; April 16, 2026 
+ 
+5 
+Step 6: Save the two data frames as Excel ﬁles 
+ 
+Save df_diabetes_metadata and  df_diabetes_features  as Excel ﬁles named 
+Table_diabetes_metadata.xlsx and df_diabetes_features.xlsx , 
+respec8vely. 
+ 
+ 
+ 
+ 

@@ -1,0 +1,656 @@
+Course: Hands-On Data Analytics with Python
+Eli Zamir
+Session 7: Cluster analyses and dimensionality reduction methods
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+1
+
+Tabular data is multidimensional data
+MedInc
+8.3252
+street block #0:
+MedInc
+8.3252
+HouseAge
+41.0
+MedInc
+8.3252
+HouseAge
+41.0
+6.98
+1D
+2D
+3D
+8 features
+8D
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+2
+
+MedInc
+8.3252
+street block #0:
+MedInc
+8.3252
+HouseAge
+41.0
+MedInc
+8.3252
+HouseAge
+41.0
+6.98
+1D
+2D
+3D
+8D
+street block #1:
+street block #2:
+street block #3:
+street block #4:
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+3
+Tabular data is multidimensional data
+
+Cluster analysis
+Cluster analyses: 
+Unsupervised learning methods which assign data points into clusters,
+Clusters ≡subsets of the data points, such that data points within a cluster are more similar to 
+each other than data points between cluster
+Feature 1
+Feature 2
+Unsupervised learning: 
+•
+Identifying patterns based only on the input features, 
+with no pre-labeling of the data points
+Supervised learning: 
+•
+Using the labels of the data points in order to identify 
+patterns between the input features and the label
+More similar versus less similar: 
+➢A distance measure in needed!
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+4
+
+Distance measures: Euclidean distance
+𝐷𝑖𝑠𝑡𝑎𝑛𝑐𝑒𝑎,𝑏=
+𝑎1 −𝑏1 2 + 𝑎2 −𝑏2 2
+n features → n dimensions:
+𝐷𝑖𝑠𝑡𝑎𝑛𝑐𝑒𝑎,𝑏=
+෍
+𝑖=1
+𝑛
+𝑎𝑖−𝑏𝑖2
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+5
+a
+b
+𝑎1 −𝑏1
+𝑎2 −𝑏2
+𝐷𝑖𝑠𝑡𝑎𝑛𝑐𝑒𝑎,𝑏
+Feature 1
+Feature 2
+a
+b
+2 features→ 2 dimensions:
+Euclidean distance between 2 data points, a and b:
+
+(1) Have two different, not inter-convertible, units ?  (e.g. weight and height)   
+(2) Have the same unit but different magnitudes of variance
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+6
+Fundamental challenges in defining a distance measure
+𝐷𝑖𝑠𝑡𝑎𝑛𝑐𝑒𝑎,𝑏=
+𝑎1 −𝑏1 2 + 𝑎2 −𝑏2 2
+What if Feature 1 and Feature 2:
+a
+b
+𝑎1 −𝑏1
+[Kg]
+𝑎2 −𝑏2
+[cm]
+𝐷𝑖𝑠𝑡𝑎𝑛𝑐𝑒𝑎,𝑏
+➢
+It is meaningless to add their values:  [Kg]2 + [cm]2 (meaningless)
+a
+b
+𝑎1 −𝑏1
+Feature with high 
+variance
+𝑎2 −𝑏2
+Feature with low 
+variance
+𝐷𝑖𝑠𝑡𝑎𝑛𝑐𝑒𝑎,𝑏
+➢
+Features with higher variance will dominate the distance measure
+➢
+Features with low variance will have little impact on the distance measure
+
+Features standardization (z-score normalization )
+Features standardization enables to have meaningful distance measures between data points
+Features standardization (also termed: z-score normalization)
+Transforms the values of the features such that each feature will have:
+•
+mean = 0 
+•
+standard deviation = 1
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+7
+𝑧= 𝑥−𝜇
+𝜎
+Where:
+𝑥  is the original feature value 
+𝜇  is the mean of the original feature
+𝜎 is the standard deviation of the original feature
+𝑧 is the standartized feature value
+•
+The features standardization enables to solve these two issues:
+•
+(1) Features having different units:  the units get canceled, (due to the division by the standard deviation)
+•
+(2) Features having different variance: the standard deviation (and the variance) becomes the same (=1)  (due 
+to the division by the standard deviation)
+•
+In addition features standardization centers the data around 0 (mean = 0) (due to the subtraction of the mean)
+
+Data standardization
+Data 
+standardization
+𝑧= 𝑥−𝜇
+𝜎
+𝑥  is the original feature value
+𝜇  is the mean of the original feature
+𝜎 is the standard deviation of the original feature
+𝑧 is the standartized feature value
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+8
+
+“Scikit-learn”: library for machine learning
+https://scikit-learn.org/
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+9
+
+Loading and organizing the “iris” dataset of scikit-learn
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+10
+
+Features standardization with scikit-learn
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+11
+
+Types of clustering algorithms
+1. Hierarchical clustering algorithms
+•
+Bottom-up (agglomerative) clustering algorithms:
+       Start with each data point as a  cluster and recursively merge them
+•
+Bottom-up (divisive) clustering algorithms :
+       Start with the whole data as one  cluster and recursively split
+2. Partitioning clustering algorithms
+Divide data into K non-overlapping clusters by optimizing a certain objective.
+•
+K-means clustering
+3. Density and graph algorithms
+Find clusters based on density or graph structure.
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+12
+
+Types of clustering algorithms
+1. Hierarchical clustering algorithms
+•
+Bottom-up (agglomerative) clustering algorithms:
+       Start with each data point as a  cluster and recursively merge them
+•
+Bottom-up (divisive) clustering algorithms :
+       Start with the whole data as one  cluster and recursively split
+2. Partitioning clustering algorithms
+Divide data into K non-overlapping clusters by optimizing a certain objective.
+•
+K-means clustering
+3. Density and graph algorithms
+Find clusters based on density or graph structure.
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+13
+
+Bottom-up (agglomerative) hierarchical clustering
+Feature 1
+Feature 2
+Bottom-up hierarchical clustering algorithm 
+Start with each individual data point as a cluster
+Merge the two closest clusters to one cluster
+(document which clusters and their distance)
+Is number of clusters > 1 ?
+End
+Yes
+No
+Two modules in the algorithm have to be decided on:
+1)
+Distance matric: Which distance metrics to use? 
+2)
+Linkage method: How to calculate the distance between two newly formed clusters?
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+14
+
+Linkage methods
+•
+'single’: The distance between two nearest data  points (each point from a different cluster)
+•
+'complete’: The distance between two farthest data  points (each point from a different cluster)
+•
+'average’: The average of all pairwise distances between clusters
+•
+"centroid”: The distance between the centers (means) of the two clusters
+•
+"median”: The distance between the centers (medians) of the two clusters
+•
+"ward”: Minimizes increase in total within-cluster variance
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+15
+
+Hierarchical clustering step 1: Performing the clustering
+The linkage matrix: Encodes the hierarchical clustering steps
+•
+Rows correspond to the merging steps (each row → a single merge of two clusters to one)
+•
+Columns 1 and 2: 
+Indices of the 2 merging clusters
+•
+Column 3: 
+ 
+The distance between the two merged clusters
+•
+Column 4: 
+ 
+The total number of data points in the merged cluster
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+16
+•
+Performs the clustering
+•
+Documents the merging steps
+•
+Return a linkage matrix
+Each single data point is initially a cluster
+Merging the two closest clusters to one
+Is number of clusters > 1 ?
+End
+Yes
+No
+linkage
+
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+17
+Hierarchical clustering step 2: Visualizing and exploring the dendrogram
+First merging
+Second merging
+
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+18
+Hierarchical clustering: Visualizing the labels on the dendrogram
+labels =
+
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+19
+Hierarchical clustering: applying a distance cut-off
+color_threshold = 
+plt.axhline()
+
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+20
+Hierarchical clustering: applying a distance cut-off
+
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+21
+Hierarchical clustering: changing the clustering parameters
+method = “ward”
+(before is was:
+method = “average”)
+
+The elbow method for finding an optimum threshold
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+22
+Checking the distance between the merged clusters at each of the last Nth merges:
+Checking the  of merging-clusters-distance along the last Nth merges:
+
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+23
+The elbow method for finding an optimum threshold
+
+Types of clustering algorithms
+1. Hierarchical clustering algorithms
+•
+Bottom-up (agglomerative) clustering algorithms:
+       Start with each data point as a  cluster and recursively merge them
+•
+Bottom-up (divisive) clustering algorithms :
+       Start with the whole data as one  cluster and recursively split
+2. Partitioning clustering algorithms
+Divide data into K non-overlapping clusters by optimizing a certain objective.
+•
+K-means clustering
+3. Density and graph algorithms
+Find clusters based on density or graph structure.
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+24
+
+K-means clustering algorithm
+Initiate randomly K cluster centers
+Assign each data point to the nearest cluster-center
+Re-calculate and update cluster centers
+Check: cluster centers still change ?
+End
+Feature 1
+Feature 2
+Yes
+No
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+25
+
+Implementation of K-means clustering algorithm
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+26
+KMeans(n_clusters= )
+.fit()
+
+Predicting cluster assignment for new data
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+27
+.fit_predict()
+
+Multidimensional data
+MedInc
+8.3252
+street block #0:
+MedInc
+8.3252
+HouseAge
+41.0
+MedInc
+8.3252
+HouseAge
+41.0
+6.98
+1D
+2D
+3D
+8D
+street block #1:
+street block #2:
+street block #3:
+street block #4:
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+28
+
+Dimensionality reduction
+Dimensionality reduction methods:
+Techniques that transform high-dimensional data into a lower-dimensional representation 
+while preserving as much relevant information as possible.
+Motivations:
+(1) Visualization
+(2) Noise reduction
+(3) Distilling patterns and insights
+General principal:
+•
+Keeping important information: variance, relations, clusters
+•
+Discarding: noise, redundancy and irrelevant features 
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+29
+
+Main types of dimensionality reduction methods
+Linear methods:
+Assume the important information is a lower-dimensional linear subspace
+•
+Principal Components Analysis (PCA): Finds directions of maximum variance. 
+Non-linear methods:
+Captures complex, curved manifold structures, local and global structures
+•
+t-SNE
+•
+UMAP
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+30
+
+The “wine” dataset of scikit-learn
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+31
+
+Standardizing the “wine” dataset 
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+32
+
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+33
+Scatter plots of all feature-pairing combinations
+
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+34
+Scatter plots of all feature-pairing combinations (with labels)
+
+Principal Components Analysis (PCA)
+Principal Components Analysis (PCA): 
+A method to finds the axes (“principal components”; PCs) of maximum variance in the data,  
+using linear combinations of the original axes (i.e. original features). 
+Such that:
+•
+PC1 (first principal component): Represents the direction of maximum variance in the data
+•
+PC2 (second principal component): is the axis which is orthogonal (perpendicular) to PC1 
+and which captures the maximum of the variance which is not already captured by PC1
+•
+… and so on with PC3, PC4… 
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+35
+
+Principal Components Analysis (PCA): Implementation
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+36
+PCA()
+.fit_transform()
+After .fit_transform():
+wine_pca contains:
+•
+wine_pca.components_:  A 2D array indicating the weight (load) of each of the original feature (column) on 
+each of the PC (row)
+•
+wine_pca.explained_variance_:The variance exaplained by each of the PCs
+•
+(and additional parameters)
+And:
+wine_features_pca_transformed: 
+Contains the PCA-transformed dataset, where rows correspond to the data points as in the original dataset, but the 
+columns correspond to the PCs (instead of the original features)
+
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+37
+Principal Components Analysis (PCA): Implementation
+Organizing the transformed data as DataFrame: 
+
+PCA 
+transformation 
+of the data
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+38
+Principal Components Analysis (PCA): Implementation
+Original features
+(i.e. original axes)
+PCs
+(i.e. the new axes)
+
+PCA: Visualizing the transformed data
+Important: The PCA analysis does NOT use the labels, it is an unsupervised analysis.  
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+39
+wine_pca.explained_variance_ratio_[0]
+wine_pca.explained_variance_ratio_[1]
+df_wine_features_pca_transformed["PC1"]
+df_wine_features_pca_transformed["PC2"]
+The 2 axes
+The fraction of explained 
+variance by each of the axes
+
+The target classes get 
+color-coded
+(for visual inspection)
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+40
+PCA: Visualizing the transformed data with the labels
+c = y_wine
+
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+41
+PCA: The explained variance along the difference PCs
+PC1 vs. PC2
+PC3 vs. PC4
+PC5 vs. PC6
+
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+42
+PCA: examining the loading of the original features on the PCs
+Example, here:    PC1 = 0.14*alcohol - 0.245*malic_acid - 0.002 * ash . . . + 0.29*proline
+The loading formulate how the PCs are linearly combined from the original features. 
+
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+43
+PCA: examining the loading of the original features on the PCs
+The loading on PC1
+The loading on PC2
+
+PCA: visualizing the loading of the original features on the PCs
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+44
+→ This can indicate which features underly a certain observed pattern
+
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+45
+PCA: visualizing the loading of the original features on the PCs
+
+Preparing the data for PCA: Data standardization
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+46
+Data standardization:
+It is essential to perform data standardization before applying PCA
+•
+PCA is driven by variance
+➢Data standardization equalizes the variance of the features, thus equalizes their influence
+•
+Centering of the data of each feature around 0 (as also achieved by the data standardization) 
+eliminates offsets and thus ensures that the PCA will capture the true directions of the variance
+
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+47
+log-transformation:
+If all values > 0, and some features are skewed, then it is recommended to apply log-transform (before 
+data standardizing).
+➢This enables the PCA not to be dominated by extreme values 
+Preparing the data for PCA: log-transformation
+Verifying the all values > 0
+Applying first log-transformation
+Applying next data standardization
+
+Principle coordinates analysis (PCoA): comparison with PCA
+Principal Components Analysis (PCA): 
+Gets as input the positions of the data points in the features-space 
+Principal coordinates analysis (PCoA):
+Gets as input pair-wise distances between each data point
+MedInc
+8.3252
+HouseAge
+41.0
+6.98
+PCA
+PCoA
+Distance matrix
+Features space
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+48
+
+Implementation of principle coordinates analysis (PCoA)
+Example: inter-countries cost of trade score
+df_trade_matrix
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+49
+
+Implementation of principle coordinates analysis (PCoA)
+Ensuring symmetry, zero diagonal and id’s
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+50
+
+Implementation of principle coordinates analysis (PCoA)
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+51
+
+t-Distributed Stochastic Neighbor Embedding (t-SNE)
+t-SNE (t-Distributed Stochastic Neighbor Embedding):
+•
+A nonlinear dimensionality reduction algorithm
+•
+Focuses on preserving local structures in the data
+•
+Data points which are very similar to each other are kept together in a cluster
+•
+Distances between clusters are typically meaningless → so global structures are not well preserved
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+52
+
+t-SNE: Implementation
+May 07, 2026
+Hands-on data analytics with Python; Session 7; Dr. Eli Zamir
+53
+Main t-SNE parameters:
+• n_components: Number of output dimensions (usually 2 or 3, for visualization)
+• perplexity: Controls how many nearby points influence where point is placed (~5–50, must be < number of samples)
+• Low values: focus very local structures → small, fragmented clusters
+• High values: Consider a bit more also global structures
+• learning_rate: Step size in gradient descent 
+• n_iter / max_iter: Number of optimization iterations (~1000–3000)
+TSNE()

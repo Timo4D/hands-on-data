@@ -1,0 +1,87 @@
+Hands-on data analy,cs with Python; Dr. Eli Zamir                                                        Session 3 Exercises; April 09, 2026 
+ 
+1 
+Exercise 1:  for…in Itera)ons 
+ 
+(1a) Using range(), write a for loop that generates the output line: 
+ 
+With a tab separa)on between the numbers. (Hint: use end="\t" in the print command) 
+ 
+(1b) Based on (1a), write nested for loops that generate as output the following mul)plica)on 
+table: 
+ 
+(Hint: use print() when it is needed that the output will go one line down.) 
+ 
+(1c) Modify your solu)on to (1b), so that the output will be: 
+ 
+ 
+ 
+Exercise 2:  while Itera)ons 
+ 
+Write a code, containing a while loop, which starts with amount =100 and year = 0, and 
+in which in each itera)on year is increased by 1 and amount is mul)plied by 1.03 
+ 
+These itera)ons should proceed un)l amount becomes ≥ 120.  
+ 
+In each itera)on the year and amount values are printed.  
+The obtained output should be: 
+ 
+ 
+ 
+ 
+ 
+ 
+Exercise 3:  List comprehension 
+ 
+Using range(), write a list comprehension statement that generates a list of the squares (**2) 
+of all the integers from 1 to 30 which can be divided by 3 (with no remainder).  
+The obtained results should be: 
+ 
+
+Hands-on data analy,cs with Python; Dr. Eli Zamir                                                        Session 3 Exercises; April 09, 2026 
+ 
+2 
+Exercise 4:  Func)ons 
+ 
+(4a) Write a func)on convert_temperature to convert between Celsius and Fahrenheit.  
+The func)on should take two inputs:  
+• temperature : for the temperature value 
+• unit :for the unit, “F” for  Fahrenheit and “C” for Celsius. 
+ 
+The conversion from Celsius to Fahrenheit is: temperature * 9/5 + 32 
+The conversion from Fahrenheit to Celsius is: (temperature - 32) * 5/9 
+ 
+Check the func)on you wrote for the following inputs: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(4b) Write a func)on factorize_integer to factorize integers (e.g. 30 = 2 * 3 * 5). The 
+func)on should take one input number and output its prime factors. 
+ 
+Check the func)on you wrote, based on the  
+following examples: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Check now also for following example (12345678901234567). Here, if the algorithm your wrote 
+is not eﬃcient enough, the computa)on may take long )me (more than several seconds). In that 
+case, interrupt the Kernel (e.g. through the Jupyter Notebook menu) and try to make the func)on 
+more eﬃcient algorithm-wise. 

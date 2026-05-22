@@ -1,0 +1,571 @@
+Course: Hands-On Data Analytics with Python
+Eli Zamir
+Lesson 2: Core Python programming (part 1)
+March 26, 2026
+1
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+
+Python main features
+•
+General-purpose programming language
+•
+Interpreted language (no need to compile) 
+       → easy to interact with the code, 
+ 
+the data and the results
+•
+Supports multiple programming paradigms: 
+•
+Procedural programming 
+•
+Object-oriented programming 
+•
+Functional programming
+•
+Large ecosystem of third-party libraries
+•
+Large and active community of developers and users
+•
+Cross-platform compatibility: Windows, macOS, Linux
+•
+Open source and free
+•
+High applicability across many domains
+•
+Strong tools (Jupyter Notebook , IDEs, terminal)
+2
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+
+Comments with Python code
+3
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+
+Data Types in Python
+Python has 5 basic built-in data types:
+int 
+Integers
+str  
+Strings
+float 
+ 
+floating-point numbers
+complex 
+Complex numbers
+bool 
+Booleans
+Variables: Containers for storing values that can change during program execution (e.g.,                        )
+Data Types: The kind of value that a variable holds (e.g.,          )
+4
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+
+Python is a dynamically typed language
+Dynamically typed language: The type of a variable is determined at runtime and can change during execution
+5
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+
+Operators
+Arithmetic operators:
++ – * /           the standard arithmetic symbols
+** 
+ 
+exponentiation
+% 
+ 
+modulo division
+// 
+ 
+floor division
+Comparison operators
+== 
+ 
+Equal to ?
+!= 
+ 
+Not equal to ?
+> < 
+ 
+greater than or less than ?
+<= 
+ 
+Less than or equal ?
+>= 
+ 
+Great than or equal ?
+Logical operators
+and  
+Both must be True
+or 
+ 
+At least one must be True
+not  
+Reverses the Boolean state
+6
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+
+Simple Input and Output
+7
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+Input: the input()function
+Output: the print() function
+Note: 
+In practice, the input()function is more commonly used in Python scripts, although it also 
+works in Jupyter Notebooks
+
+The formatted string literal (f-string)  
+8
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+f-string enables to embed and evaluate Python expressions directly inside {} at runtime
+f”text{expression}”
+Example usage within the print() function:
+
+The formatted string literal (f-string)  
+9
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+The {} can contain Python expression which are evaluated to a value:
+Numerical 
+operations
+String 
+operations
+Logical 
+operations
+
+The formatted string literal (f-string)  
+10
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+Escape sequences
+\n new line
+\t tab
+Formatting number display:
+
+Data structures
+Int
+Integers
+Str
+Strings
+float
+floating-point numbers
+Bool
+Booleans
+11
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+The “building block” data types:
+Data structures: containers that store data in an organized manner 
+Example: 
+The list data structure:
+
+Data structures
+list
+[a,b,c]
+12
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+dict
+{key:val,key:val}
+(dictionary)
+set
+{a,b,c}
+tuple
+(a,b,c)
+
+The list data structure
+The “list” data structure: 
+an ordered collection of items that can be modified.
+13
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+list
+[a,b,c]
+
+Some important methods for the list data-structure  
+Creating a list
+14
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+Appending an item
+Inserting an item
+at a position
+Pop’ing an item
+Removing an item
+
+Slicing
+15
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+sequence(start : end : step)
+Slicing enables to subset a sequence of elements
+Syntax:
+For start and end:
+•
+If value ≥0 then the value indicates the index position
+•
+If value < 0 then the value indicates the index position from the end 
+Default values:
+•
+start = 0
+•
+end 
+= the last position
+•
+step = 1
+When an end position is given, the end position itself is excluded
+
+list: slicing
+16
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+
+list: sorting
+17
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+Default sorting (ascending order)
+Sorting in reverse order
+Sorting using a function-derived key (abs) 
+
+Data Structure: tuple
+18
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+The “tuple” data structure: an ordered, immutable collection of items.
+tuple
+(a,b,c)
+
+tuple: Creating, accessing and slicing
+Creating a tuple
+19
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+Immutability
+Slicing
+Accessing
+
+Data Structures: set
+The “set” data structure: an unordered collection of unique elements.
+Sets are typically used to:
+•
+Ensure uniqueness of elements
+•
+Preform set algebra operations (union, intersection, difference)
+20
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+set
+{a,b,c}
+
+Creating a set and adding elements
+21
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+Creating a set
+Adding an element
+Adding multiple elements
+
+22
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+set: Removing elements
+Discard an element from a set if it is a member
+discard
+remove
+Remove an element from a set; 
+The given element must be a member
+
+23
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+A set does not retain element copies or elements order 
+
+set: set operations
+Sets intersection
+Sets union
+Sets unsymmetric difference
+Sets symmetric difference
+24
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+
+set: Checking if an element or another set is contained
+25
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+Checking if an element is contained
+Checking if a set is subset of another set
+Checking if two sets are disjoint
+
+Data Structures: Dictionary
+The “dictionary” (dict) data structure:  
+An unordered collection of unique key-value pairs, where values are mutable and accessed via keys.
+key
+value
+Syntax:
+26
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+dict 
+{key:val,key:val}
+(dictionary)
+
+dict: Creating a dictionary
+Examples of ways to create a dictionary:
+27
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+Explicitly:
+Using dict():
+Using dict.fromkeys():
+
+dict: Adding and updating elements
+28
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+Adding an element
+Updating an element
+Updating multiple elements
+
+Simple access
+29
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+dict: Accessing an element based on key
+If the key is missing
+→ Error
+Using .get
+If If the key is 
+missing, returns 
+the given default
+
+dict: Deleting an element
+30
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+Deleting an element using del
+If the key is missing
+→ Error
+Deletes the element
+based on the key
+Deleting an element using .pop()
+If If the key is 
+missing, returns 
+the given default
+Deletes the element
+based on the key
+and  returns its value
+
+Data Structures: Summary
+list
+tuple
+set
+dict
+Syntax
+[1,2,3]
+(1,2,3)
+{1,2,3}
+{'a': 1, 'b': 2, 'c': 3}
+Mutable
+Yes
+No
+Yes
+Yes (keys immutable)
+Ordered
+Yes
+Yes
+No
+Insertion ordered
+Allows duplictes
+Yes
+Yes
+No
+Keys no, Values Yes
+Indexing / Slicing
+Yes
+Yes
+No
+No numeric indexing / 
+slicing
+Typical use
+Ordered mutable 
+sequence
+Fixed read-only 
+sequence
+Unique items & 
+Set operations
+Key → value mapping
+31
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+
+Mutability of objects in Python
+Mutability: whether an object can be changed after it is created
+Mutable objects can be modified in place.
+➢Therefore, changes in such an object affect all the references to it. ()
+Examplr for mutable obtects:
+•
+list
+•
+dict
+•
+set
+Immutable objects cannot be modified.
+➢Therefore, any “change” in it actually creates a new object.
+Immutable obtects:
+•
+int
+•
+float
+•
+str
+•
+tuple
+Variables are names (labels) that reference objects in memory
+32
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+
+Mutability of objects in Python
+Immutable object (e.g. int)
+Mutable object (e.g. list)
+33
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+Also changed ! (not good)
+
+The range() function
+34
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+The  range() function enables to generate a sequence of equally-spaced integers
+range(start :  end : step)
+start: 
+Start value (default =0)
+end:       
+End value (not included !)
+step:     Increament (can be negative) default = 1
+Syntax:
+The  range() function returns a range object
+The range object can be directly converted to list / set / tuple
+Using the list(), set() or tuple() functions
+Examples:
+
+Converting between set, list, tuple
+35
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+Converting to list
+list()
+Converting to tuple
+tuple()
+Converting to set*
+*Note that in conversion to tuple, order and repitations are not retained !
+set()
+
+Control Flow: if / elif / else
+Execute code based on conditions
+36
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+if (condition):
+ 
+statement to do
+else:
+ 
+statment to do
+In Python indentation defines code blocks and hierarchy
+if (condition):
+ 
+statement to do
+elif:
+ 
+statment to do
+else:
+ 
+statment to do
+
+Condition control flow: if / elif / else
+37
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+
+Conidtion control flow: match, case
+38
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+match,case: checks a value against patterns and executes the first matching block
+
+Course: Hands-On Data Analytics with Python
+Eli Zamir
+Lesson 2: Core Python programming (part 1)
+Hands-on session
+39
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+
+Exercise 1 (practicing a variety of aspects)
+40
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+(1) Using range(start:end:step) create 3 lists: 
+ 
+“a100” : 
+of all integers from 1 to 100
+ 
+“a3”:  
+of all integers from 1 to 100 which can be divided by 3 (with no remainder)
+ 
+“a4”:  
+of all integers from 1 to 100 which can be divided by 4 (with no remainder) 
+ 
+(2) Convert these 3 lists to corresponding 3 sets: “s100”, “s3”, “s4”
+(3a) Generate a set “s_3n4” which contains all the elements which are in  “s3” AND “s4” (&)
+(3b) Generate a set “s_3u4” which contains all the elements which are in  “s3” OR “s4” (or in both) (|)
+(3c) Generate a set “s_3sd4” which contains all the elements which are either in “s3”  or in “s4”  (^)
+(3d) Generate a set “s_3m4” which contains all the elements which are in “s3”  but not “s4” (-)
+(4) Check (using len) the number of elements in each of the 7 generated sets
+(5a) Make a list “all_sets” containing all the 7 generated sets
+(5b) Generate a version of this list, “all_sets_sorted”, in which the sets are sorted by their number of elements
+(5c) Check the number of elements in the first set in “all_sets”  and in “all_sets_sorted”
+(5d) Check the number of elements in last set in “all_sets”  and in “all_sets_sorted”
+
+41
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+Exercise 2 (adding elements and mutability aspects)
+Exercise 2a
+(1) Create a set ”letters_set” containing the elements “a”, “b”, “c”.
+(2) Assign and execute: letters_set_new = letters_set
+(3) Add to the set  letters_set_new the element “d” 
+(4) Check which elements are now letters_set
+Exercise 2b
+Repeat all the steps of excersice 2a, but in step 2 assign instead by:
+letters_set_new = letters_set.copy()
+Exercise 2c
+Repeat 2a and 2b, but with lists, instead of sets (and name them letters_list and letters_list_new
+
+42
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+Exercise 3 (f-string)
+(1)
+Import numpy as np, and create a variable pi:
+(2) Use f-string, and a variable for the number of decimal digits to print these statements:
+
+
+
+The print statement shoule be always the same
+
+43
+March 26, 2026
+Hands-on data analytics with Python; Session 2; Dr. Eli Zamir
+Exercise 4 (condition control flow)
+(2) Write a match/ case statement that checks the type of variable y (using type()) , 
+ and print “1”, “2”, “3” or “4” if y is a list, tuple, dictionary or a set, respectively
+(1) Write an if/elif/else statement that checks if variable x is bigger / equal or smaller than 100 
