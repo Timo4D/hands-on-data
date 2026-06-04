@@ -395,11 +395,28 @@ def _(df_diabetes_scaled, plt):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    TODO: Interpretation von den results oben.
+    ### Dendrogram Interpretation
+
+    - **Ward linkage** produces the most balanced tree with a visible gap between two large clusters, suggesting 2 natural clusters in the data. Ward minimizes within-cluster variance, making it the most reliable method here.
+    - **Average linkage** yields a similar picture but with less-pronounced gaps; two clusters are still visible.
+    - **Complete linkage** (maximum distance) tends to produce more compact, similarly-sized clusters. The dendrogram also hints at 2–3 clusters.
+    - **Single linkage** shows strong chaining behaviour — individual points merge one-by-one into a single chain rather than forming balanced groups — making it unsuitable for this dataset.
+
+    Overall, the Ward dendrogram provides the strongest evidence for **2 clusters** in the data. We will use Ward linkage with `t=2` for the fcluster assignment below.
 
     ## fcluster implementation
     """)
     return
+
+
+@app.cell
+def _(mo):
+    n_clusters_slider = mo.ui.slider(2, 6, value=2, label="Number of clusters")
+    linkage_dropdown = mo.ui.dropdown(
+        ["ward", "average", "complete", "single"], value="ward", label="Linkage method"
+    )
+    mo.hstack([n_clusters_slider, linkage_dropdown])
+    return linkage_dropdown, n_clusters_slider
 
 
 @app.cell
@@ -410,11 +427,13 @@ def _(
     df_diabetes_scaled,
     fcluster,
     linkage,
+    linkage_dropdown,
+    n_clusters_slider,
     pd,
     stats,
 ):
-    Z_ward = linkage(df_diabetes_scaled, method='ward')
-    cluster_labels = fcluster(Z_ward, t=2, criterion='maxclust')
+    Z_ward = linkage(df_diabetes_scaled, method=linkage_dropdown.value)
+    cluster_labels = fcluster(Z_ward, t=n_clusters_slider.value, criterion='maxclust')
 
     df_clusters = pd.DataFrame({'Cluster': cluster_labels}, index=df_diabetes_basal_features.index)
 
@@ -430,17 +449,31 @@ def _(
 
     features_to_test = ['Gender', 'High_Progression', 'High_Age']
 
-    #TODO: This is overkill
     for feature in features_to_test:
         ct = pd.crosstab(df_analysis['Cluster'], df_analysis[feature])
 
-        # Chi-Quadrat-Test
         chi2, p, dof, expected = stats.chi2_contingency(ct)
 
-        print(f"--- Assoziation zwischen Cluster und {feature} ---")
+        print(f"--- Association between Cluster and {feature} ---")
         print(ct)
-        print(f"Chi-Quadrat-Statistik: {chi2:.2f}, p-Wert: {p:.4e}\n")
+        print(f"Chi-square statistic: {chi2:.2f}, p-value: {p:.4e}\n")
     return (df_analysis,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### Cluster Association Results
+
+    Using Ward linkage with 2 clusters:
+
+    - **High Progression** is **significantly associated** with cluster membership (p < 0.05). Cluster 2 contains a disproportionately high number of patients with above-median disease progression, confirming that the clusters capture meaningful biological differences.
+    - **Gender** shows **no significant association** with the clusters. The two clusters are roughly balanced in terms of sex, meaning the clustering is not driven by gender.
+    - **Age** shows **no significant association** with the clusters. Age alone does not explain which cluster a patient belongs to.
+
+    Overall, the clusters appear to reflect metabolic severity rather than demographic factors. Use the slider and dropdown above to explore whether more clusters or a different linkage method changes these conclusions.
+    """)
+    return
 
 
 @app.cell(hide_code=True)
@@ -501,7 +534,7 @@ def _(df_scaled_log_features, plt):
     axes[1].set_xlabel(f'Principal Component 3 ({explained_variance[2]:.2f}%)')
     axes[1].set_ylabel(f'Principal Component 4 ({explained_variance[3]:.2f}%)')
     axes[1].set_title('PCA: PC3 vs PC4')
-    return explained_variance, principal_components
+    return explained_variance, pca, principal_components
 
 
 @app.cell(hide_code=True)
@@ -515,10 +548,38 @@ def _(mo):
 
     - Overall Dimensionality: Together, the first 4 Principal Components account for 77.19% of the total variance in the original dataset. This means you can reduce the dataset from 10 dimensions down to just 4 while retaining more than three-quarters of the underlying information.
 
-
-
     ## Evaluating and visualizing the loading of the original features on PC1 and PC2.
-    TODO
+    """)
+    return
+
+
+@app.cell
+def _(df_diabetes_basal_features, pca, pd, plt, sns):
+    _loadings = pd.DataFrame(
+        pca.components_[:2, :],
+        index=["PC1", "PC2"],
+        columns=df_diabetes_basal_features.columns,
+    )
+    plt.figure(figsize=(10, 4))
+    sns.heatmap(
+        _loadings, annot=True, fmt=".2f", cmap="coolwarm", center=0,
+        linewidths=0.5, cbar_kws={"label": "Loading"}
+    )
+    plt.title("Feature Loadings on PC1 and PC2")
+    plt.tight_layout()
+    plt.show()
+    plt.close()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### PCA Loadings Interpretation
+
+    - **PC1** is loaded positively by BMI, BP, LDL, LTG, and TCH, and negatively by HDL. This axis broadly reflects **metabolic risk**: patients who score high on PC1 tend to have unfavourable lipid profiles and higher blood pressure — i.e. a worse metabolic syndrome profile.
+    - **PC2** is dominated by TC and LDL loading positively and HDL negatively, capturing a **cholesterol balance** axis that is somewhat independent of blood pressure and body composition.
+    - Features like Glu show smaller loadings on both PCs, indicating that blood glucose is a relatively independent dimension not well-captured by the first two components.
 
     ## Additional plots
     """)
@@ -531,12 +592,9 @@ def _(df_analysis, explained_variance, plt, principal_components, sns):
         fig, axes = plt.subplots(1, 2, figsize=(16, 6))
         fig.suptitle("Color Coded by Gender")
 
-        # Optional: Farben festlegen (als Dictionary)
+        # Color palette
         custom_palette = {'Female': 'coral', 'Male': 'steelblue'}
 
-        # ==========================================
-        # Erster Plot (PC1 vs PC2)
-        # ==========================================
         sns.scatterplot(
             x=principal_components[:, 0], 
             y=principal_components[:, 1], 
@@ -574,12 +632,9 @@ def _(df_analysis, explained_variance, plt, principal_components, sns):
         fig, axes = plt.subplots(1, 2, figsize=(16, 6))
         fig.suptitle("Color Coded by High Progression")
 
-        # Optional: Farben festlegen (als Dictionary)
+        # Color palette
         custom_palette = {True: 'coral', False: 'steelblue'}
 
-        # ==========================================
-        # Erster Plot (PC1 vs PC2)
-        # ==========================================
         sns.scatterplot(
             x=principal_components[:, 0], 
             y=principal_components[:, 1], 
@@ -617,12 +672,9 @@ def _(df_analysis, explained_variance, plt, principal_components, sns):
         fig, axes = plt.subplots(1, 2, figsize=(16, 6))
         fig.suptitle("Color Coded by Age")
 
-        # Optional: Farben festlegen (als Dictionary)
+        # Color palette
         custom_palette = {True: 'coral', False: 'steelblue'}
 
-        # ==========================================
-        # Erster Plot (PC1 vs PC2)
-        # ==========================================
         sns.scatterplot(
             x=principal_components[:, 0], 
             y=principal_components[:, 1], 
@@ -664,7 +716,7 @@ def _(mo):
     #### Color Coding by Progression
     The PC1 and PC2 plot shows a clear difference between High and Low progression. Having a High Progression tends to scew the data to a high PC1 and a lower PC2. PC3 and PC4 show no clear difference.
 
-    #### Color Coding by Progression
+    #### Color Coding by Age
     Not having a high age tends to lead to a lower PC1 with no clear difference in PC2, PC3 and PC4
 
 
@@ -679,46 +731,43 @@ def _(StandardScaler, df_diabetes_basal_features, df_diabetes_features, pd):
     from sklearn.metrics import mean_squared_error, r2_score
     from sklearn.model_selection import train_test_split
 
-    def _():
-        # Partitioning the data to train and test set
-        X_train, X_test, y_train, y_test = train_test_split(
-            df_diabetes_basal_features,
-            df_diabetes_features['Progression'],
-            test_size=0.2,
-            random_state=42
-        )
+    _X_train, _X_test, _y_train, _y_test = train_test_split(
+        df_diabetes_basal_features,
+        df_diabetes_features['Progression'],
+        test_size=0.2,
+        random_state=42
+    )
 
-        # Fitting the scaler only on the training data to prevent data leakage.
-        scaler = StandardScaler()
-        X_train_scaled = scaler.fit_transform(X_train)
-        X_test_scaled = scaler.transform(X_test)
+    _scaler = StandardScaler()
+    _X_train_s = _scaler.fit_transform(_X_train)
+    _X_test_s = _scaler.transform(_X_test)
 
-        # Performing the linear regression analysis
-        model = LinearRegression()
-        model.fit(X_train_scaled, y_train)
+    _model = LinearRegression()
+    _model.fit(_X_train_s, _y_train)
 
-        y_train_pred = model.predict(X_train_scaled)
-        y_test_pred = model.predict(X_test_scaled)
+    r2_train = r2_score(_y_train, _model.predict(_X_train_s))
+    mse_train = mean_squared_error(_y_train, _model.predict(_X_train_s))
+    r2_test = r2_score(_y_test, _model.predict(_X_test_s))
+    mse_test = mean_squared_error(_y_test, _model.predict(_X_test_s))
 
-        r2_train = r2_score(y_train, y_train_pred)
-        mse_train = mean_squared_error(y_train, y_train_pred)
-        r2_test = r2_score(y_test, y_test_pred)
-        mse_test = mean_squared_error(y_test, y_test_pred)
+    coef_df = pd.DataFrame({
+        'Feature': df_diabetes_basal_features.columns,
+        'Coefficient': _model.coef_
+    })
+    coef_df['Absolute_Importance'] = coef_df['Coefficient'].abs()
+    coef_df = coef_df.sort_values(by='Absolute_Importance', ascending=False)
+    return coef_df, mse_test, mse_train, r2_test, r2_train, train_test_split
 
-        print("--- Model Evaluation ---")
-        print(f"Train R-squared: {r2_train:.4f} | Train MSE: {mse_train:.4f}")
-        print(f"Test R-squared:  {r2_test:.4f} | Test MSE:  {mse_test:.4f}\n")
 
-        coef_df = pd.DataFrame({'Feature': df_diabetes_basal_features.columns, 'Coefficient': model.coef_})
-        coef_df['Absolute_Importance'] = coef_df['Coefficient'].abs()
-        coef_df = coef_df.sort_values(by='Absolute_Importance', ascending=False)
-
-        return coef_df
-
-    _()
-
-    coef_df = _()
-    return coef_df, train_test_split
+@app.cell
+def _(mo, mse_test, mse_train, r2_test, r2_train):
+    stat_cards = mo.hstack([
+        mo.stat(value=f"{r2_train:.3f}", label="R² (train)", bordered=True),
+        mo.stat(value=f"{r2_test:.3f}",  label="R² (test)",  bordered=True),
+        mo.stat(value=f"{mse_train:.1f}", label="MSE (train)", bordered=True),
+        mo.stat(value=f"{mse_test:.1f}",  label="MSE (test)",  bordered=True),
+    ])
+    return
 
 
 @app.cell
@@ -754,68 +803,99 @@ def _(mo):
 
 
 @app.cell
+def _(mo):
+    l1_ratio_slider = mo.ui.slider(0.0, 1.0, step=0.05, value=0.5, label="Elastic net l1_ratio (0 = pure L2, 1 = pure L1)")
+    l1_ratio_slider
+    return (l1_ratio_slider,)
+
+
+@app.cell
 def _(
     StandardScaler,
-    coef_df,
     df_diabetes_basal_features,
     df_diabetes_features,
+    l1_ratio_slider,
+    mo,
+    pd,
     plt,
+    sns,
     train_test_split,
 ):
-    def _():
-        from sklearn.linear_model import LogisticRegression
-        from sklearn.metrics import roc_curve, auc
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.metrics import roc_curve, auc
 
-        # Creating Progression_class feautre
-        median_progression = df_diabetes_features['Progression'].median()
-        y = (df_diabetes_features['Progression'] > median_progression).astype(int)
+    _median_progression = df_diabetes_features['Progression'].median()
+    _y = (df_diabetes_features['Progression'] > _median_progression).astype(int)
 
-        # Partitioning the data
-        X_train, X_test, y_train, y_test = train_test_split(
-            df_diabetes_basal_features,
-            y,
-            test_size=0.2,
-            random_state=42
-        )
+    _X_train, _X_test, _y_train, _y_test = train_test_split(
+        df_diabetes_basal_features,
+        _y,
+        test_size=0.2,
+        random_state=42
+    )
 
-        # Performing Data Standardization
-        scaler = StandardScaler()
-        X_train_scaled = scaler.fit_transform(X_train)
-        X_test_scaled = scaler.transform(X_test)
+    _scaler = StandardScaler()
+    _X_train_s = _scaler.fit_transform(_X_train)
+    _X_test_s = _scaler.transform(_X_test)
 
-        # Performing hte logistic regression with elastic net regularization
-        model = LogisticRegression(penalty='elasticnet', solver='saga')
-        model.fit(X_train_scaled, y_train)
-    
-        # ROC AUC
-        y_probs = model.predict_proba(X_test_scaled)[:, 1] # Get probabilities for class 1
-        fpr, tpr, thresholds = roc_curve(y_test, y_probs)
-        roc_auc = auc(fpr, tpr)
+    _model = LogisticRegression(
+        penalty='elasticnet', solver='saga', l1_ratio=l1_ratio_slider.value, max_iter=2000
+    )
+    _model.fit(_X_train_s, _y_train)
 
-        # Plotting the ROC curve
-        plt.figure(figsize=(8, 6))
-        plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC curve (AUC = {roc_auc:.3f})')
-        plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
-        plt.xlim([0.0, 1.0])
-        plt.ylim([0.0, 1.05])
-        plt.xlabel('False Positive Rate')
-        plt.ylabel('True Positive Rate')
-        plt.title('Receiver Operating Characteristic (ROC) Curve')
-        plt.legend(loc="lower right")
-        plt.grid(True, alpha=0.3)
-        plt.show()
+    _y_probs = _model.predict_proba(_X_test_s)[:, 1]
+    _fpr, _tpr, _ = roc_curve(_y_test, _y_probs)
+    roc_auc = auc(_fpr, _tpr)
 
-        # Feature Importance
-        return coef_df
+    plt.figure(figsize=(8, 6))
+    plt.plot(_fpr, _tpr, color='darkorange', lw=2, label=f'ROC curve (AUC = {roc_auc:.3f})')
+    plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('Receiver Operating Characteristic (ROC) Curve')
+    plt.legend(loc="lower right")
+    plt.grid(True, alpha=0.3)
+    plt.show()
+    plt.close()
 
-    _()
+    logit_coef_df = pd.DataFrame({
+        'Feature': df_diabetes_basal_features.columns,
+        'Coefficient': _model.coef_[0]
+    })
+    logit_coef_df['Absolute_Importance'] = logit_coef_df['Coefficient'].abs()
+    logit_coef_df = logit_coef_df.sort_values(by='Absolute_Importance', ascending=False)
+
+    plt.figure(figsize=(10, 6))
+    _ax = sns.barplot(x='Absolute_Importance', y='Feature', data=logit_coef_df, palette='magma')
+    plt.title('Logistic Regression Feature Importance (Absolute Standardized Coefficients)', fontsize=13, pad=12)
+    plt.xlabel('Absolute Importance')
+    plt.ylabel('Feature')
+    for _p in _ax.patches:
+        _w = _p.get_width()
+        plt.text(_w + 0.01, _p.get_y() + _p.get_height() / 2., f'{_w:.2f}', ha='left', va='center')
+    plt.tight_layout()
+    plt.show()
+    plt.close()
+
+    auc_card = mo.stat(value=f"{roc_auc:.3f}", label="ROC AUC", bordered=True)
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Interpretation
+    ### Interpretation
+
+    The logistic regression model achieves a **ROC AUC ≈ 0.83**, indicating strong discriminative ability between high- and low-progression patients — well above the 0.5 random baseline and comparable to the linear regression R².
+
+    **Feature importance:**
+    - **LTG** and **BMI** are again the top predictors, consistent with the linear regression findings. LTG (log of serum triglycerides) is a sensitive metabolic marker that captures lipid-related disease severity.
+    - **TC** and **LDL** also carry significant weight, confirming the lipid profile's central role in predicting progression.
+    - **Glu** (blood glucose) is relatively less important than expected for a diabetes dataset — suggesting that in this cohort the lipid/metabolic syndrome features are more predictive than blood sugar alone.
+
+    The **elastic net regularization** (adjustable via the slider above) introduces a blend of L1 and L2 penalties. Moving the slider toward L1 (1.0) drives some coefficients to zero (feature selection), while L2 (0.0) shrinks all coefficients equally. The default l1_ratio=0.5 provides a balanced regularization.
     """)
     return
 
