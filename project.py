@@ -756,7 +756,16 @@ def _(StandardScaler, df_diabetes_basal_features, df_diabetes_features, pd):
     })
     coef_df['Absolute_Importance'] = coef_df['Coefficient'].abs()
     coef_df = coef_df.sort_values(by='Absolute_Importance', ascending=False)
-    return coef_df, mse_test, mse_train, r2_test, r2_train, train_test_split
+    return (
+        coef_df,
+        mean_squared_error,
+        mse_test,
+        mse_train,
+        r2_score,
+        r2_test,
+        r2_train,
+        train_test_split,
+    )
 
 
 @app.cell
@@ -897,6 +906,147 @@ def _(mo):
 
     The **elastic net regularization** (adjustable via the slider above) introduces a blend of L1 and L2 penalties. Moving the slider toward L1 (1.0) drives some coefficients to zero (feature selection), while L2 (0.0) shrinks all coefficients equally. The default l1_ratio=0.5 provides a balanced regularization.
     """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    # Project Task 8: Gradient-boosted trees with XGBoost
+
+    The linear regression in Task 6 assumes a purely linear, additive relationship between each feature and `Progression`. To test whether a **non-linear** model can do better, we apply **XGBoost** (`XGBRegressor`) — a gradient-boosted ensemble of decision trees — and use **GridSearchCV** (5-fold cross-validation) to select the best combination of hyper-parameters from a small candidate grid.
+    """)
+    return
+
+
+@app.cell
+def _(
+    StandardScaler,
+    df_diabetes_basal_features,
+    df_diabetes_features,
+    mean_squared_error,
+    mse_test,
+    pd,
+    plt,
+    r2_score,
+    r2_test,
+    sns,
+    train_test_split,
+):
+    from xgboost import XGBRegressor
+    from sklearn.model_selection import GridSearchCV
+
+    _X_train, _X_test, _y_train, _y_test = train_test_split(
+        df_diabetes_basal_features,
+        df_diabetes_features['Progression'],
+        test_size=0.2,
+        random_state=42
+    )
+
+    _scaler = StandardScaler()
+    _X_train_s = _scaler.fit_transform(_X_train)
+    X_test_s_xgb = _scaler.transform(_X_test)
+
+    _param_grid = {
+        'n_estimators':  [100, 200, 300],
+        'max_depth':     [2, 3, 5],
+        'learning_rate': [0.05, 0.1, 0.2],
+    }
+
+    _grid = GridSearchCV(
+        XGBRegressor(random_state=42),
+        _param_grid,
+        cv=5,
+        scoring='r2',
+        n_jobs=-1
+    )
+    _grid.fit(_X_train_s, _y_train)
+
+    xgb_best_model = _grid.best_estimator_
+    xgb_r2_train = r2_score(_y_train, xgb_best_model.predict(_X_train_s))
+    xgb_mse_train = mean_squared_error(_y_train, xgb_best_model.predict(_X_train_s))
+    xgb_r2_test  = r2_score(_y_test, xgb_best_model.predict(X_test_s_xgb))
+    xgb_mse_test  = mean_squared_error(_y_test, xgb_best_model.predict(X_test_s_xgb))
+
+    print(f"Best params : {_grid.best_params_}")
+    print(f"XGBoost  : R²(test)={xgb_r2_test:.3f}  MSE(test)={xgb_mse_test:.1f}")
+    print(f"LinReg   : R²(test)={r2_test:.3f}  MSE(test)={mse_test:.1f}")
+
+    _imp_df = pd.DataFrame({
+        'Feature':    df_diabetes_basal_features.columns,
+        'Importance': xgb_best_model.feature_importances_
+    }).sort_values(by='Importance', ascending=False)
+
+    plt.figure(figsize=(10, 6))
+    _ax = sns.barplot(x='Importance', y='Feature', data=_imp_df, palette='viridis')
+    plt.title('XGBoost Regressor Feature Importance (gain)', fontsize=14, pad=12)
+    plt.xlabel('Importance (gain)')
+    plt.ylabel('Feature')
+    for _p in _ax.patches:
+        _w = _p.get_width()
+        plt.text(_w + 0.002, _p.get_y() + _p.get_height() / 2., f'{_w:.3f}', ha='left', va='center')
+    plt.tight_layout()
+    plt.show()
+    plt.close()
+    return X_test_s_xgb, xgb_best_model
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(rf"""
+    ### Interpretation
+
+    GridSearchCV selects the best combination of `n_estimators`, `max_depth`, and `learning_rate` via 5-fold cross-validation, preventing the hand-picking bias of a single run.
+
+    On this small dataset the two models perform similarly, which confirms that the feature–Progression relationships are **predominantly linear**. XGBoost can overfit when `max_depth` or `n_estimators` are large, but cross-validation keeps is preventing too much overfitting for the most part.
+
+    The gain-based importance again ranks **LTG, BMI, LDL, and TC** as the top predictors, consistent with the linear regression coefficients, reinforcing the conclusion that lipid and metabolic markers drive disease progression more than blood glucose alone.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## SHAP Analysis
+
+    Gain-based importance (above) shows *how much* each feature is used across all splits, but not *whether* it increases or decreases the prediction. SHAP (SHapley Additive exPlanations) assigns each feature a signed contribution for every individual patient, enabling both a global importance ranking and local, patient-level explanation.
+    """)
+    return
+
+
+@app.cell
+def _(X_test_s_xgb, df_diabetes_basal_features, plt, xgb_best_model):
+    import shap
+
+    _explainer = shap.TreeExplainer(xgb_best_model)
+    _shap_values = _explainer(X_test_s_xgb)
+    _shap_values.feature_names = list(df_diabetes_basal_features.columns)
+
+    shap.plots.beeswarm(_shap_values, show=False)
+    plt.title("SHAP Beeswarm Plot — XGBoost Feature Contributions (test set)")
+    plt.tight_layout()
+    plt.show()
+    plt.close()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### SHAP Interpretation
+
+    - **LTG** is the top predictor by mean |SHAP|. Low LTG (blue) clusters far left, high LTG far right and is thus a strong positive effect: elevated triglycerides drive predicted progression up sharply.
+    - **BMI** is nearly as important with the same pattern: high BMI pushes predictions up, low BMI down. Together, LTG and BMI dominate the model and dwarf all other features consistent with the Feature Imprtance.
+    - **BP** is third and also positively associated, but the effect is much smaller in magnitude than LTG/BMI.
+    - **HDL** is the only feature with a clearly negative relationship: high HDL clusters on the negative SHAP side. This makes biological sense, HDL is the "good" cholesterol that is protective against metabolic disease.
+    - **TC, LDL, TCH, and Glu** all have low mean |SHAP| values and tight distributions close to zero.
+    """)
+    return
+
+
+@app.cell
+def _():
     return
 
 
